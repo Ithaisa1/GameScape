@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getGames, searchGames, getGamesByGenre } from '../services/api';
+import { getGames, searchGames, getGamesByGenre, searchGamesWithGenre } from '../services/api';
 
 export const useGames = (searchQuery = '', genre = '', page = 1) => {
   const [games, setGames] = useState([]);
@@ -15,11 +15,16 @@ export const useGames = (searchQuery = '', genre = '', page = 1) => {
       try {
         let data;
         
+        // Convert genre to number if it exists
+        const genreId = genre ? Number(genre) : '';
+        
         // Simple if-else logic
-        if (searchQuery) {
+        if (searchQuery && genreId) {
+          data = await searchGamesWithGenre(searchQuery, genreId, page);
+        } else if (searchQuery) {
           data = await searchGames(searchQuery, page);
-        } else if (genre) {
-          data = await getGamesByGenre(genre, page);
+        } else if (genreId) {
+          data = await getGamesByGenre(genreId, page);
         } else {
           data = await getGames(page);
         }
@@ -27,6 +32,7 @@ export const useGames = (searchQuery = '', genre = '', page = 1) => {
         setGames(data.results);
         setTotalCount(data.count);
       } catch (err) {
+        console.error('Error fetching games:', err);
         setError(err.message);
       } finally {
         setLoading(false);

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useGameContext } from '../context/GameContext';
+import { useGameContext } from '../context/useGameContext';
+import '../styles/GameCard.css';
 
 export default function GameCard({ game }) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useGameContext();

@@ -35,6 +35,18 @@ export const searchGames = async (query, page = 1) => {
   return response.json();
 };
 
+export const searchSuggestions = async (query) => {
+  const response = await fetch(
+    `${BASE_URL}/games?key=${API_KEY}&search=${query}&page_size=5`
+  );
+
+  if (!response.ok) {
+    throw new Error("Error al obtener sugerencias");
+  }
+
+  return response.json();
+};
+
 export const getGamesByGenre = async (genre, page = 1) => {
   const response = await fetch(
     `${BASE_URL}/games?key=${API_KEY}&genres=${genre}&page=${page}&page_size=20`
@@ -46,6 +58,17 @@ export const getGamesByGenre = async (genre, page = 1) => {
 
   return response.json();
 };
+
+
+export const searchGamesWithGenre = async (query, genre, page = 1) =>{
+  const response = await fetch(`${BASE_URL}/games?key=${API_KEY}&search=${query}&genres=${genre}&page=${page}&page_size=20`);
+  
+  if (!response.ok) {
+    throw new Error("Error al buscar juegos con género");
+  }
+
+  return response.json();
+}
 
 export const getGenres = async () => {
   const response = await fetch(`${BASE_URL}/genres?key=${API_KEY}`);

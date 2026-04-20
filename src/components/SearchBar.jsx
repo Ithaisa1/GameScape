@@ -1,46 +1,127 @@
-import { useState } from 'react';
-import { useGameContext } from '../context/GameContext';
+import { useState, useEffect } from 'react';
+import { useGameContext } from '../context/useGameContext';
+import { searchSuggestions } from '../services/api';
+import '../styles/SearchBar.css';
 
 export default function SearchBar() {
   const { searchQuery, setSearchQuery } = useGameContext();
   const [localQuery, setLocalQuery] = useState(searchQuery);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchQuery(localQuery);
+    setShowSuggestions(false);
   };
 
   const handleChange = (e) => {
-    setLocalQuery(e.target.value);
+    const value = e.target.value;
+    setLocalQuery(value);
   };
 
   const handleClear = () => {
     setLocalQuery('');
     setSearchQuery('');
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
+
+  const handleSuggestionClick = (gameName) => {
+    setLocalQuery(gameName);
+    setSearchQuery(gameName);
+    setShowSuggestions(false);
   };
 
   const showClearButton = localQuery.length > 0;
 
+  // Debounce for suggestions
+  useEffect(() => {
+    let timeoutId;
+
+    const fetchSuggestions = async () => {
+      if (localQuery.length >= 2) {
+        try {
+          const data = await searchSuggestions(localQuery);
+          setSuggestions(data.results || []);
+          setShowSuggestions(true);
+        } catch (err) {
+          console.error('Error fetching suggestions:', err);
+        }
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    };
+
+    // Clear previous timeout
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    // Set new timeout (debounce 500ms)
+    timeoutId = setTimeout(() => {
+      fetchSuggestions();
+    }, 500);
+
+    // Cleanup function
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [localQuery]);
+
   return (
     <form className="search-bar" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        className="search-bar__input"
-        placeholder="Search games..."
-        value={localQuery}
-        onChange={handleChange}
-      />
-      {showClearButton && (
-        <button
-          type="button"
-          className="search-bar__clear"
-          onClick={handleClear}
-        >
-          ✕
-        </button>
+      <div className="search-bar__input-wrapper">
+        <input
+          type="text"
+          className="search-bar__input"
+          placeholder="Search games..."
+          value={localQuery}
+          onChange={handleChange}
+          onFocus={() => setShowSuggestions(suggestions.length > 0)}
+        />
+        {showClearButton && (
+          <button
+            type="button"
+            className="search-bar__clear"
+            onClick={handleClear}
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
+      {showSuggestions && suggestions.length > 0 && (
+        <div className="search-bar__suggestions">
+          {suggestions.map((game) => (
+            <div
+              key={game.id}
+              className="search-bar__suggestion"
+              onClick={() => handleSuggestionClick(game.name)}
+            >
+              {game.name}
+            </div>
+          ))}
+        </div>
       )}
+
       <button type="submit" className="search-bar__button">
-        🔍
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
       </button>
     </form>
   );

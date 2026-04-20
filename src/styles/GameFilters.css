@@ -1,0 +1,64 @@
+.game-filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.game-filters__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.game-filters__item label {
+  color: #B8BDC9;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.game-filters__select {
+  background-color: #171A21;
+  color: #FFFFFF;
+  border: 1px solid #222734;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.game-filters__select:hover {
+  border-color: #5B8CFF;
+  background-color: #222734;
+}
+
+.game-filters__select:focus {
+  outline: none;
+  border-color: #5B8CFF;
+  box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.2);
+}
+
+.game-filters__select option {
+  background-color: #171A21;
+  color: #FFFFFF;
+}
+
+@media (max-width: 600px) {
+  .game-filters {
+    gap: 1rem;
+  }
+
+  .game-filters__item {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .game-filters__select {
+    min-width: 100%;
+  }
+}
