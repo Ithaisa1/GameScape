@@ -1,15 +1,16 @@
 # GameScape 🎮
 
-Buscador de videojuegos que permite a los usuarios encontrar títulos de forma rápida y personalizada según sus intereses, géneros o preferencias. La plataforma actúa como un punto de decisión informada: una vez localizado el videojuego deseado, el usuario puede visualizar su tráiler oficial (si lo hubiese) y acceder directamente al proceso de descarga o compra.
+Buscador de videojuegos que permite a los usuarios encontrar títulos de forma rápida y personalizada según sus intereses, géneros o preferencias. La plataforma utiliza la API RAWG para mostrar información detallada de juegos con filtros avanzados y una interfaz moderna.
 
-## 🌟 Características
+## 🌟 Características (Día 1)
 
-- **Búsqueda de juegos**: Busca por nombre, género o plataforma
-- **Fichas detalladas**: Información completa de cada juego (sinopsis, género, valoraciones, capturas)
-- **Trailers**: Reproducción de tráilers oficiales dentro de la aplicación
-- **Sistema de favoritos**: Guarda tus juegos favoritos para acceder rápidamente
-- **Diseño responsive**: Optimizado para móviles (600px), tablets (1024px) y desktop
-- **UI moderna**: Diseño oscuro con gradientes y animaciones suaves
+- **Búsqueda de juegos**: Busca por nombre con autocompletado y debounce
+- **Filtros avanzados**: Filtra por género (IDs numéricos compatibles con RAWG) y rating
+- **Grid de juegos**: Visualización en grid responsive con información clave
+- **Sistema de favoritos**: Añade/elimina juegos de favoritos
+- **Paginación inteligente**: Estilo Netflix/Amazon con rango dinámico
+- **Diseño responsive**: Optimizado para móviles, tablets y desktop
+- **UI moderna**: Diseño oscuro con colores personalizados (#0F1115, #171A21, #222734, #5B8CFF, #A78BFA)
 
 ## 🛠️ Tecnologías
 
@@ -29,28 +30,40 @@ gamescape/
 ├── src/
 │   ├── components/       # Componentes reutilizables
 │   │   ├── GameCard.jsx
+│   │   ├── GameFilters.jsx
 │   │   ├── Navbar.jsx
+│   │   ├── Pagination.jsx
 │   │   ├── SearchBar.jsx
 │   │   └── Loader.jsx
 │   ├── context/          # Context API
-│   │   └── GameContext.jsx
+│   │   ├── GameContext.js
+│   │   ├── useGameContext.js
+│   │   └── GameProvider.jsx
 │   ├── hooks/            # Hooks personalizados
 │   │   ├── useGames.js
-│   │   └── UseGemaeDetail.js
+│   │   └── useGameDetail.js
 │   ├── pages/            # Páginas de la aplicación
 │   │   ├── Home.jsx
-│   │   ├── GameDetail.jsx
-│   │   └── Favorites.jsx
+│   │   ├── GameDetail.jsx (Día 2)
+│   │   └── Favorites.jsx (Día 2)
 │   ├── services/         # Servicios API
 │   │   └── api.js
+│   ├── styles/           # CSS modular
+│   │   ├── App.css
+│   │   ├── GameCard.css
+│   │   ├── GameFilters.css
+│   │   ├── Home.css
+│   │   ├── Loader.css
+│   │   ├── Navbar.css
+│   │   ├── Pagination.css
+│   │   └── SearchBar.css
 │   ├── test/             # Tests unitarios
 │   │   ├── setup.js
 │   │   ├── GameCard.test.jsx
 │   │   ├── useGames.test.jsx
 │   │   └── useGameDetail.test.jsx
-│   ├── utils/            # Utilidades
-│   │   ├── filterGames.js
-│   │   └── formatDate.js
+│   ├── router/           # Enrutamiento
+│   │   └── index.jsx
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
@@ -86,7 +99,7 @@ npm run dev
 
 Ejecuta los tests:
 ```bash
-npm test
+npm run test
 ```
 
 Ejecuta los tests con UI:
@@ -102,21 +115,21 @@ npm run build
 
 ## 🎯 Flujo de usuario
 
-1. **🔎 Buscar**: El usuario introduce el nombre de un videojuego o explora mediante filtros
-2. **📄 Ver ficha**: Al seleccionar un juego, accede a información detallada
-3. **🎬 Ver tráiler**: Reproduce el tráiler oficial del videojuego
-4. **🤔 Decidir**: Evalúa si el videojuego le interesa
-5. **⬇️ Descargar**: Redirección a la tienda oficial para descargar/comprar
+1. **🔎 Buscar**: El usuario introduce el nombre de un videojuego con autocompletado
+2. **🎛️ Filtrar**: Aplica filtros por género y rating
+3. **📄 Explorar**: Navega por el grid de juegos con paginación
+4. **❤️ Favoritos**: Añade/elimina juegos de favoritos
+5. **📄 Ver detalle** (Día 2): Accede a información completa del juego
 
 ## 🎨 Conceptos de React utilizados
 
-- **Context API**: Gestión de estado global (favoritos, búsqueda, filtros)
+- **Context API**: Gestión de estado global (favoritos, búsqueda, filtros, paginación)
 - **useEffect**: Llamadas a la API y efectos secundarios
-- **useMemo**: Optimización de renderizado
 - **useState**: Gestión de estado local
 - **React Router**: Navegación entre páginas
 - **Props**: Paso de datos entre componentes
-- **Hooks personalizados**: Lógica reutilizable
+- **Hooks personalizados**: Lógica reutilizable (useGames, useGameDetail)
+- **Debounce**: Optimización de búsquedas con autocompletado
 
 ## 📱 Responsive Design
 
@@ -130,7 +143,8 @@ npm run build
 - `npm run build` - Build para producción
 - `npm run preview` - Previa del build
 - `npm run lint` - Ejecuta ESLint
-- `npm test` - Ejecuta tests
+- `npm run test` - Ejecuta tests
+- `npm run test:ui` - Ejecuta tests con interfaz gráfica
 
 ## 📝 Uso de IA en el proyecto
 
