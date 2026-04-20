@@ -147,4 +147,4 @@ Este proyecto es para fines educativos.
 
 ## 👤 Autor
 
-Desarrollado como proyecto de práctica para IronHack.
+Desarrollado por Ithaisa SG.
