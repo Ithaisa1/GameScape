@@ -43,8 +43,8 @@ export default function GameFilters() {
           onChange={handleRatingSortChange}
         >
           <option value="">Por defecto</option>
-          <option value="asc">Mayor a menor</option>
-          <option value="desc">Menor a mayor</option>
+          <option value="desc">Mayor a menor</option>
+          <option value="asc">Menor a mayor</option>
         </select>
       </div>
     </div>

@@ -24,13 +24,28 @@ export default function Home() {
 
   // Show error if there is one
   if (error) {
-    return (
-      <div className="error">
-        <h2>Error: {error}</h2>
-        <p>Por favor, intenta de nuevo más tarde.</p>
+  return (
+    <div className="error">
+      <div className="error__icon">⚠️</div>
+      <h2 className="error__title">Oops! Algo salió mal</h2>
+      <p className="error__message">{error}</p>
+      <div className="error__actions">
+        <button 
+          className="error__retry-btn"
+          onClick={() => window.location.reload()}
+        >
+          Reintentar
+        </button>
+        <button 
+          className="error__home-btn"
+          onClick={() => window.location.href = '/'}
+        >
+          Ir al inicio
+        </button>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   // Sort games by rating (simple logic)
   let sortedGames = [...games];

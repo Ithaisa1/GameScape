@@ -70,3 +70,70 @@
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }
+
+/* Error Styles */
+.error {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+ 
+.error__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+ 
+.error__title {
+  color: #ff6b6b;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+ 
+.error__message {
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+ 
+.error__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+ 
+.error__retry-btn,
+.error__home-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+ 
+.error__retry-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+ 
+.error__home-btn {
+  background: transparent;
+  color: #5B8CFF;
+  border: 1px solid #5B8CFF;
+}
+ 
+.error__retry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+ 
+.error__home-btn:hover {
+  background: rgba(91, 140, 255, 0.1);
+  transform: translateY(-2px);
+}

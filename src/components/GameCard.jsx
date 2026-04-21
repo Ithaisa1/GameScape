@@ -6,13 +6,17 @@ export default function GameCard({ game }) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useGameContext();
 
   const handleFavoriteClick = (e) => {
-    e.preventDefault();
-    if (isFavorite(game.id)) {
-      removeFromFavorites(game.id);
-    } else {
-      addToFavorites(game);
-    }
-  };
+  e.preventDefault();
+  e.stopPropagation();
+  
+  console.log('Click en favorito:', game.id, isFavorite(game.id));
+  
+  if (isFavorite(game.id)) {
+    removeFromFavorites(game.id);
+  } else {
+    addToFavorites(game);
+  }
+};
 
   const favorite = isFavorite(game.id);
   const rating = game.rating ? game.rating.toFixed(1) : 'N/A';
@@ -31,7 +35,7 @@ export default function GameCard({ game }) {
           className={`game-card__favorite ${favorite ? 'active' : ''}`}
           onClick={handleFavoriteClick}
         >
-          {favorite ? '❤️' : '🤍'}
+         {favorite ? '❤️' : '🤍'}
         </button>
       </div>
       <div className="game-card__content">

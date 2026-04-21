@@ -1,8 +1,8 @@
-# GameScape 🎮
+# GameScape 
 
 Buscador de videojuegos que permite a los usuarios encontrar títulos de forma rápida y personalizada según sus intereses, géneros o preferencias. La plataforma utiliza la API RAWG para mostrar información detallada de juegos con filtros avanzados y una interfaz moderna.
 
-## 🌟 Características (Día 1)
+##  Características (Día 1)
 
 - **Búsqueda de juegos**: Busca por nombre con autocompletado y debounce
 - **Filtros avanzados**: Filtra por género (IDs numéricos compatibles con RAWG) y rating
@@ -11,6 +11,21 @@ Buscador de videojuegos que permite a los usuarios encontrar títulos de forma r
 - **Paginación inteligente**: Estilo Netflix/Amazon con rango dinámico
 - **Diseño responsive**: Optimizado para móviles, tablets y desktop
 - **UI moderna**: Diseño oscuro con colores personalizados (#0F1115, #171A21, #222734, #5B8CFF, #A78BFA)
+
+##  Características (Día 2) - GameDetail Mejorado
+
+- **Página de detalle completa**: Información detallada de cada juego
+- **Media automática**: Video (si está disponible) o imagen del juego
+- **Layout profesional**: Grid con imagen/video a la izquierda, información a la derecha
+- **Rating mejorado**: Icono de estrella y diseño visual atractivo
+- **Corazones de favoritos**: Scalable sin círculo, con hover y animación
+- **Plataformas agrupadas**: PS4/5=PlayStation, Xbox One/Series=Xbox, Nintendo unificado
+- **Soporte multiplataforma**: Steam, Epic Games, GOG, Origin, Ubisoft Connect, Microsoft Store, Mobile, Web
+- **Botones de tiendas inteligentes**: Solo aparecen si el juego está disponible en esa plataforma
+- **Eliminación de duplicados**: Lógica con Map para garantizar unicidad total
+- **Layout reorganizado**: Géneros bajo imagen, características donde está, plataformas y tiendas en ancho completo
+- **Diseño responsive**: Adaptado para móviles y tablets
+- **Sin contenido vacío**: Mensajes fallback cuando no hay información disponible
 
 ## 🛠️ Tecnologías
 
@@ -51,7 +66,9 @@ gamescape/
 │   ├── styles/           # CSS modular
 │   │   ├── App.css
 │   │   ├── GameCard.css
+│   │   ├── GameDetail.css (Día 2)
 │   │   ├── GameFilters.css
+│   │   ├── Favorites.css (Día 2)
 │   │   ├── Home.css
 │   │   ├── Loader.css
 │   │   ├── Navbar.css

@@ -1,6 +1,10 @@
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 const BASE_URL = "https://api.rawg.io/api";
 
+// Debug: Verificar si la API key está disponible
+console.log('API Key disponible:', !!API_KEY);
+console.log('API Key length:', API_KEY?.length || 0);
+
 export const getGames = async (page = 1, pageSize = 20) => {
   const response = await fetch(
     `${BASE_URL}/games?key=${API_KEY}&page=${page}&page_size=${pageSize}`

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GameContext } from './GameContext';
+import { GameContext } from './GameContext.js';
 
 export default function GameProvider({ children }) {
   const [favorites, setFavorites] = useState([]);
