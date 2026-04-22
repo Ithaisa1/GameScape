@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react';
-import { useGameContext } from '../context/useGameContext';
+import { useState, useEffect, useRef } from 'react';
+import { useGameContext } from '../hooks/useGameContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { searchSuggestions } from '../services/api';
+import SearchSuggestions from './SearchSuggestions';
 import '../styles/SearchBar.css';
 
 export default function SearchBar() {
   const { searchQuery, setSearchQuery } = useGameContext();
+  const { user } = useAuthContext();
   const [localQuery, setLocalQuery] = useState(searchQuery);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,9 +76,32 @@ export default function SearchBar() {
     };
   }, [localQuery]);
 
+  // Cerrar sugerencias al hacer clic fuera o presionar Escape
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
   return (
     <form className="search-bar" onSubmit={handleSubmit}>
-      <div className="search-bar__input-wrapper">
+      <div className="search-bar__input-wrapper" ref={searchRef}>
         <input
           type="text"
           className="search-bar__input"
@@ -89,7 +116,7 @@ export default function SearchBar() {
             className="search-bar__clear"
             onClick={handleClear}
           >
-            ✕
+            &#10005;
           </button>
         )}
       </div>
@@ -105,6 +132,12 @@ export default function SearchBar() {
               {game.name}
             </div>
           ))}
+        </div>
+      )}
+
+      {user && (
+        <div className="search-bar__suggestions-container">
+          <SearchSuggestions />
         </div>
       )}
 

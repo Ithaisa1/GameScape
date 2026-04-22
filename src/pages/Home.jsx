@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useGameContext } from '../context/useGameContext';
-import { useGames } from '../hooks/useGames';
+import { Link } from 'react-router-dom';
+import { useGameContext } from '../hooks/useGameContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
 import Loader from '../components/Loader';
@@ -9,8 +10,19 @@ import Pagination from '../components/Pagination';
 import '../styles/Home.css';
 
 export default function Home() {
-  const { searchQuery, selectedGenre, ratingSort, currentPage, setCurrentPage } = useGameContext();
-  const { games, loading, error, totalCount } = useGames(searchQuery, selectedGenre, currentPage);
+  const { 
+    searchQuery, 
+    selectedGenre, 
+    ratingSort, 
+    currentPage, 
+    setCurrentPage,
+    games,
+    loading,
+    error,
+    totalCount
+  } = useGameContext();
+
+  const { isAuthenticated } = useAuthContext();
 
   // Reset page when filters change
   useEffect(() => {
@@ -24,28 +36,28 @@ export default function Home() {
 
   // Show error if there is one
   if (error) {
-  return (
-    <div className="error">
-      <div className="error__icon">⚠️</div>
-      <h2 className="error__title">Oops! Algo salió mal</h2>
-      <p className="error__message">{error}</p>
-      <div className="error__actions">
-        <button 
-          className="error__retry-btn"
-          onClick={() => window.location.reload()}
-        >
-          Reintentar
-        </button>
-        <button 
-          className="error__home-btn"
-          onClick={() => window.location.href = '/'}
-        >
-          Ir al inicio
-        </button>
+    return (
+      <div className="error">
+        <div className="error__icon">⚠️</div>
+        <h2 className="error__title">Oops! Algo salió mal</h2>
+        <p className="error__message">{error}</p>
+        <div className="error__actions">
+          <button 
+            className="error__retry-btn"
+            onClick={() => window.location.reload()}
+          >
+            Reintentar
+          </button>
+          <button 
+            className="error__home-btn"
+            onClick={() => window.location.href = '/'}
+          >
+            Ir al inicio
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   // Sort games by rating (simple logic)
   let sortedGames = [...games];
@@ -74,6 +86,24 @@ export default function Home() {
       <div className="home__header">
         <h1 className="home__title">{title}</h1>
         {slogan && <p className="home__slogan">{slogan}</p>}
+        
+        {!isAuthenticated && (
+          <div className="home__auth-prompt">
+            <div className="home__auth-content">
+              <h3>¡Inicia sesión para guardar tus favoritos!</h3>
+              <p>Crea tu cuenta personal y guarda los juegos que te gusten</p>
+              <div className="home__auth-buttons">
+                <Link to="/login" className="home__auth-btn home__auth-btn--primary">
+                  Iniciar Sesión
+                </Link>
+                <Link to="/register" className="home__auth-btn home__auth-btn--secondary">
+                  Registrarse
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+        
         <SearchBar />
         <GameFilters />
       </div>

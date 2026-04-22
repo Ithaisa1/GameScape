@@ -1,4 +1,4 @@
-import { useGameContext } from '../context/useGameContext';
+import { useGameContext } from '../hooks/useGameContext';
 import '../styles/GameFilters.css';
 
 export default function GameFilters() {

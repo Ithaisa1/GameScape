@@ -43,7 +43,7 @@ export default function GameCard({ game }) {
       <div className="game-card__content">
         <h3 className="game-card__title">{game.name}</h3>
         <div className="game-card__meta">
-          <span className="game-card__rating">⭐ {rating}</span>
+          <span className="game-card__rating">â {rating}</span>
           <span className="game-card__released">{year}</span>
         </div>
         <div className="game-card__genres">
@@ -58,7 +58,7 @@ export default function GameCard({ game }) {
         className={`game-card__favorite ${favorite ? 'active' : ''}`}
         onClick={handleFavoriteClick}
       >
-       {favorite ? '❤️' : '🤍'}
+       {favorite ? 'â¤ï¸' : 'ð¤'}
       </button>
     </Link>
   );

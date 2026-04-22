@@ -11,9 +11,12 @@
 }
 
 .search-bar__input-wrapper {
-  display: flex;
-  align-items: center;
+  position: relative;
   flex: 1;
+}
+
+/* Contenedor para sugerencias de historial */
+.search-bar__suggestions-container {
   position: relative;
 }
 

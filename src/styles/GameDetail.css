@@ -82,7 +82,7 @@
  
 .game-detail__favorite-btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  color: #fafafa;
   border: none;
   padding: 1rem 2rem;
   border-radius: 50px;
@@ -100,7 +100,8 @@
 }
  
 .game-detail__favorite-btn.favorite {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #a85b5b 0%, #d62424 100%);
+  border: 1px solid rgba(220, 38, 38, 0.3);
 }
  
 .game-detail__main-content {

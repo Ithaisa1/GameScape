@@ -1,6 +1,7 @@
-import { useGameContext } from '../context/useGameContext';
+import { useGameContext } from '../hooks/useGameContext';
 import { Link } from 'react-router-dom';
 import GameCard from '../components/GameCard';
+import SearchHistory from '../components/SearchHistory';
 import '../styles/Favorites.css';
 
 export default function Favorites(){
@@ -28,6 +29,8 @@ export default function Favorites(){
                     Los juegos que has marcado como favoritos
                 </p>
             </div>
+
+            <SearchHistory />
 
             <div className="favorites__grid">
                 {favorites.map((game) => (
