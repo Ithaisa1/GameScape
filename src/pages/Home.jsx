@@ -67,7 +67,7 @@ export default function Home() {
     sortedGames.sort((a, b) => (b.rating || 0) - (a.rating || 0));
   }
 
-  // Calculate total pages (20 games per page)
+  // Calculate total pages (20 games per page - API pagination)
   const gamesPerPage = 20;
   const totalPages = Math.ceil(totalCount / gamesPerPage);
 
@@ -120,13 +120,11 @@ export default function Home() {
             ))}
           </div>
 
-          {totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </>
       )}
     </div>

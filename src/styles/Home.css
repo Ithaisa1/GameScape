@@ -138,20 +138,20 @@
   transform: translateY(-2px);
 }
 
-/* Sección de autenticación en Home */
+/* Sección de autenticación en Home - Mobile First */
 .home__auth-prompt {
   background: linear-gradient(135deg, rgba(91, 140, 255, 0.1), rgba(167, 139, 250, 0.1));
   border: 1px solid rgba(91, 140, 255, 0.2);
   border-radius: 12px;
-  padding: 24px;
-  margin: 24px 0;
+  padding: 20px 16px;
+  margin: 16px 0;
   text-align: center;
   backdrop-filter: blur(10px);
 }
 
 .home__auth-content h3 {
   color: var(--text-primary);
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 10px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -159,24 +159,28 @@
 
 .home__auth-content p {
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  margin-bottom: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
 }
 
 .home__auth-buttons {
   display: flex;
+  flex-direction: column;
   gap: 12px;
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 .home__auth-btn {
-  padding: 10px 20px;
+  padding: 12px 20px;
   border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
   font-size: 0.9rem;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
 }
 
 .home__auth-btn--primary {
@@ -201,23 +205,46 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 768px) {
+/* Responsive para autenticación */
+@media (min-width: 576px) {
   .home__auth-prompt {
-    padding: 20px 16px;
-    margin: 16px 0;
+    padding: 22px 20px;
+    margin: 20px 0;
   }
-  
+
   .home__auth-content h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
-  
+
+  .home__auth-content p {
+    font-size: 0.92rem;
+    margin-bottom: 18px;
+  }
+
   .home__auth-buttons {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    gap: 14px;
   }
-  
+
   .home__auth-btn {
-    width: 100%;
-    max-width: 200px;
+    width: auto;
+    max-width: none;
+    padding: 10px 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .home__auth-prompt {
+    padding: 24px;
+    margin: 24px 0;
+  }
+
+  .home__auth-content h3 {
+    font-size: 1.25rem;
+  }
+
+  .home__auth-content p {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
   }
 }

@@ -1,8 +1,18 @@
 import '../styles/Pagination.css';
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
-  // Calculate page range to show (max 10 pages)
-  const maxPagesToShow = 10;
+  // Responsive page range based on screen size (simulated)
+  const getPagesToShow = () => {
+    // Simulate responsive behavior - in real app would use window.innerWidth
+    const isMobile = window.innerWidth < 576;
+    const isTablet = window.innerWidth >= 576 && window.innerWidth < 768;
+    
+    if (isMobile) return 5;  // Mobile: show 5 pages
+    if (isTablet) return 7;  // Tablet: show 7 pages
+    return 10; // Desktop: show 10 pages
+  };
+
+  const maxPagesToShow = getPagesToShow();
   let startPage = 1;
   let endPage = totalPages;
 
@@ -61,10 +71,6 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
           </button>
         ))}
       </div>
-
-      <span className="pagination__info">
-        {startPage}–{endPage} de {totalPages}
-      </span>
 
       <button
         className="pagination__button"

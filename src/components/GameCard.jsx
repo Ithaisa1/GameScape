@@ -19,6 +19,10 @@ export default function GameCard({ game }) {
       return;
     }
     
+    // Si es usuario, ir a detalle del juego
+    window.location.href = `/game/${game.id}`;
+    return;
+    
     console.log('Click en favorito:', game.id, isFavorite(game.id));
     
     if (isFavorite(game.id)) {

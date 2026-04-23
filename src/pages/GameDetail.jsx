@@ -56,42 +56,42 @@ export default function GameDetail() {
 
     return (
     <div className="game-detail">
-      <div className="game-detail__main-content">
-        <div className="game-detail__media-section">
-          <div className="game-detail__media-container">
-            {gameDetail.clip && gameDetail.clip.clips && gameDetail.clip.clips.length > 0 ? (
-              <video 
-                className="game-detail__video"
-                controls
-                muted
-                loop
-                poster={gameDetail.background_image}
-              >
-                <source src={gameDetail.clip.clips[0]} type="video/mp4" />
-                Tu navegador no soporta videos HTML5.
-              </video>
-            ) : (
-              <img 
-                src={gameDetail.background_image || '/placeholder-game.jpg'} 
-                alt={gameDetail.name}
-                className="game-detail__main-image"
-              />
-            )}
-          </div>
+      <div className="game-detail__header">
+        <div className="game-detail__image-container">
+          {gameDetail.clip && gameDetail.clip.clips && gameDetail.clip.clips.length > 0 ? (
+            <video 
+              className="game-detail__video"
+              controls
+              muted
+              loop
+              poster={gameDetail.background_image}
+            >
+              <source src={gameDetail.clip.clips[0]} type="video/mp4" />
+              Tu navegador no soporta videos HTML5.
+            </video>
+          ) : (
+            <img 
+              src={gameDetail.background_image || '/placeholder-game.jpg'} 
+              alt={gameDetail.name}
+              className="game-detail__image"
+            />
+          )}
         </div>
         
-        <div className="game-detail__info-section">
+        <div className="game-detail__content">
           <div className="game-detail__header-info">
-            <h1 className="game-detail__title">{gameDetail.name}</h1>
+            <div className="game-detail__title-row">
+              <h1 className="game-detail__title">{gameDetail.name}</h1>
+              {gameDetail.released && (
+                <span className="game-detail__year">
+                  {new Date(gameDetail.released).getFullYear()}
+                </span>
+              )}
+            </div>
             <div className="game-detail__meta-separated">
               <div className="game-detail__rating-box">
                 <span className="game-detail__rating">
                   {gameDetail.rating?.toFixed(1) || 'N/A'}
-                </span>
-              </div>
-              <div className="game-detail__released-box">
-                <span className="game-detail__released">
-                  Año de lanzamiento: {new Date(gameDetail.released).getFullYear()}
                 </span>
               </div>
             </div>
@@ -99,7 +99,7 @@ export default function GameDetail() {
               className={`game-detail__favorite-btn ${isFavorite(gameDetail.id) ? 'favorite' : ''}`}
               onClick={handleToggleFavorite}
             >
-              {isFavorite(gameDetail.id) ? '💛' : '🤍'} {isFavorite(gameDetail.id) ? 'Quitar' : 'Agregar'}
+              {isFavorite(gameDetail.id) ? 'Quitar' : 'Agregar'}
             </button>
           </div>
           

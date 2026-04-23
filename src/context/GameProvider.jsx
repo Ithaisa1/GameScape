@@ -164,7 +164,10 @@ export default function GameProvider({ children }) {
       }
 
       setGames(filteredGames);
-      setTotalCount(filteredGames.length);
+      // Usar count real de API (44,000+ juegos) con fallback mínimo
+      const apiCount = data.count || 0;
+      const realCount = Math.max(apiCount, 1000); // Mínimo 1000 para asegurar paginación
+      setTotalCount(realCount);
     } catch (err) {
       console.error('Error fetching games:', err);
       setError(err.message);
