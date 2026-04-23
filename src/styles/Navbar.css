@@ -3,21 +3,22 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #171A21 0%, #222734 100%);
+  background: var(--navbar-bg);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: background 0.3s ease;
 }
 
 .navbar__logo {
   text-decoration: none;
-  color: #FFFFFF;
+  color: var(--text-primary);
 }
 
 .navbar__logo h1 {
   font-size: 1.5rem;
-  background: linear-gradient(45deg, #5B8CFF, #A78BFA);
+  background: linear-gradient(45deg, var(--primary-color), #A78BFA);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -30,7 +31,7 @@
 
 .navbar__link {
   text-decoration: none;
-  color: #B8BDC9;
+  color: var(--text-secondary);
   font-weight: 500;
   transition: color 0.3s ease;
   padding: 0.5rem 1rem;
@@ -38,7 +39,7 @@
 }
 
 .navbar__link:hover {
-  color: #5B8CFF;
+  color: var(--primary-color);
   background-color: rgba(91, 140, 255, 0.1);
 }
 
@@ -61,7 +62,7 @@
 /* Estilos para botón de registro */
 .navbar__register {
   background: rgba(91, 140, 255, 0.1);
-  color: #5B8CFF;
+  color: var(--primary-color);
   border: 1px solid rgba(91, 140, 255, 0.3);
   text-decoration: none;
   padding: 8px 16px;
@@ -118,7 +119,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #5B8CFF, #A78BFA);
+  background: linear-gradient(135deg, var(--primary-color), #A78BFA);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,13 +139,13 @@
 }
 
 .navbar__profile-name {
-  color: #ffffff;
+  color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .navbar__profile-arrow {
-  color: #8892b0;
+  color: var(--text-muted);
   font-size: 12px;
   transition: transform 0.3s ease;
 }
@@ -168,7 +169,7 @@
   align-items: center;
   width: 100%;
   padding: 12px 16px;
-  color: #ffffff;
+  color: var(--text-primary);
   text-decoration: none;
   border: none;
   background: none;
@@ -179,7 +180,7 @@
 
 .navbar__profile-menu-item:hover {
   background: rgba(91, 140, 255, 0.1);
-  color: #5B8CFF;
+  color: var(--primary-color);
 }
 
 .navbar__profile-menu-item--logout {
@@ -209,4 +210,59 @@
   .navbar__profile-menu {
     min-width: 160px;
   }
+}
+
+/* Botón toggle tema */
+.navbar__theme-toggle {
+  background: none;
+  border: 2px solid var(--text-secondary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.navbar__theme-toggle:hover {
+  background: rgba(91, 140, 255, 0.1);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.navbar__theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Estilos para tema claro */
+[data-theme="light"] .navbar__profile-menu {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .navbar__profile-menu-item {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .navbar__profile-menu-item:hover {
+  background: var(--bg-tertiary);
+  color: var(--primary-color);
+}
+
+[data-theme="light"] .navbar__profile-menu-item--logout {
+  border-top: 1px solid var(--border-color);
+  color: #dc2626;
+}
+
+[data-theme="light"] .navbar__profile-menu-item--logout:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
 }

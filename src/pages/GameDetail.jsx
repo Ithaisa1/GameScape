@@ -1,8 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom';
-import {useEffect } from 'react';
 import {useGameContext} from '../hooks/useGameContext';
 import {useAuthContext} from '../hooks/useAuthContext';
+import { getGameById } from '../services/api';
 import '../styles/GameDetail.css';
+import StoreButtons from '../components/StoreButtons';
+import StarRating from '../components/StarRating';
+import ReviewList from '../components/ReviewList';
 
 export default function GameDetail() {
     const { id } = useParams();
@@ -126,146 +130,90 @@ export default function GameDetail() {
             </div>
           </div>
           
-          <div className="game-detail__platforms-section">
-            <h3>Plataformas</h3>
-            <div className="game-detail__platforms">
-              {(() => {
-                const platformMap = new Map();
-                gameDetail.platforms?.forEach(platform => {
-                  const platformName = platform.platform.name.toLowerCase();
-                  let normalizedPlatform;
-                  
-                  if (platformName.includes('playstation 4') || platformName.includes('playstation 5') || platformName.includes('ps4') || platformName.includes('ps5')) {
-                    normalizedPlatform = 'PlayStation';
-                  } else if (platformName.includes('xbox one') || platformName.includes('xbox series x') || platformName.includes('xbox series s') || platformName.includes('xbox')) {
-                    normalizedPlatform = 'Xbox';
-                  } else if (platformName.includes('nintendo') || platformName.includes('switch') || platformName.includes('wii') || platformName.includes('gamecube')) {
-                    normalizedPlatform = 'Nintendo';
-                  } else if (platformName.includes('steam')) {
-                    normalizedPlatform = 'Steam';
-                  } else if (platformName.includes('epic')) {
-                    normalizedPlatform = 'Epic Games';
-                  } else if (platformName.includes('gog') || platformName.includes('good old games')) {
-                    normalizedPlatform = 'GOG';
-                  } else if (platformName.includes('origin')) {
-                    normalizedPlatform = 'Origin';
-                  } else if (platformName.includes('uplay') || platformName.includes('ubisoft')) {
-                    normalizedPlatform = 'Ubisoft Connect';
-                  } else if (platformName.includes('microsoft store') || platformName.includes('windows store')) {
-                    normalizedPlatform = 'Microsoft Store';
-                  } else if (platformName.includes('android') || platformName.includes('ios') || platformName.includes('mobile')) {
-                    normalizedPlatform = 'Mobile';
-                  } else if (platformName.includes('web') || platformName.includes('browser')) {
-                    normalizedPlatform = 'Web';
-                  } else {
-                    normalizedPlatform = platform.platform.name;
-                  }
-                  
-                  platformMap.set(normalizedPlatform, normalizedPlatform);
-                });
+          {(() => {
+            console.log('GameDetail - gameDetail.stores:', gameDetail.stores);
+            console.log('GameDetail - gameDetail.platforms:', gameDetail.platforms);
+            console.log('GameDetail - stores length:', gameDetail.stores?.length);
+            console.log('GameDetail - platforms length:', gameDetail.platforms?.length);
+            const hasStores = gameDetail.stores && gameDetail.stores.length > 0;
+            const hasPlatforms = gameDetail.platforms && gameDetail.platforms.length > 0;
+            console.log('GameDetail - hasStores:', hasStores);
+            console.log('GameDetail - hasPlatforms:', hasPlatforms);
+            console.log('GameDetail - should render section:', hasStores || hasPlatforms);
+            return hasStores || hasPlatforms;
+          })() && (
+            <div className="game-detail__platforms-section">
+              <h3>Dónde conseguir este juego:</h3>
+              <div className="game-detail__platforms-and-stores">
+                {/* Tiendas para comprar */}
+                {gameDetail.stores && gameDetail.stores.length > 0 && (
+                  <div className="game-detail__stores-subsection">
+                    <h4>Comprar en:</h4>
+                    <StoreButtons stores={gameDetail.stores} />
+                  </div>
+                )}
                 
-                return Array.from(platformMap.values()).map((platformName, index) => (
-                  <span key={`${platformName}-${index}`} className="game-detail__platform">
-                    {platformName}
-                  </span>
-                ));
-              })()}
-            </div>
-          </div>
-          
-          <div className="game-detail__platform-buttons">
-            <h3>Disponible en</h3>
-            <div className="game-detail__store-buttons">
-              {(() => {
-                const storeMap = new Map();
-                const hasSteam = gameDetail.platforms?.some(p => p.platform.name.toLowerCase().includes('steam'));
-                const hasPlayStation = gameDetail.platforms?.some(p => p.platform.name.toLowerCase().includes('playstation'));
-                const hasXbox = gameDetail.platforms?.some(p => p.platform.name.toLowerCase().includes('xbox'));
-                const hasNintendo = gameDetail.platforms?.some(p => p.platform.name.toLowerCase().includes('nintendo'));
-                const hasEpic = gameDetail.platforms?.some(p => p.platform.name.toLowerCase().includes('epic'));
-                
-                gameDetail.platforms?.forEach(platform => {
-                  const platformName = platform.platform.name.toLowerCase();
-                  
-                  if (hasSteam && platformName.includes('steam')) {
-                    storeMap.set('Steam', (
-                      <a 
-                        key="steam"
-                        href={`https://store.steampowered.com/app/${gameDetail.steam_appid || ''}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="game-detail__store-btn steam"
-                      >
-                        Steam
-                      </a>
-                    ));
-                  } else if (hasPlayStation && (platformName.includes('playstation 4') || platformName.includes('playstation 5') || platformName.includes('ps4') || platformName.includes('ps5'))) {
-                    storeMap.set('PlayStation', (
-                      <a 
-                        key="playstation"
-                        href={`https://store.playstation.com/product/${gameDetail.slug || ''}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="game-detail__store-btn playstation"
-                      >
-                        PlayStation
-                      </a>
-                    ));
-                  } else if (hasXbox && (platformName.includes('xbox one') || platformName.includes('xbox series x') || platformName.includes('xbox series s'))) {
-                    storeMap.set('Xbox', (
-                      <a 
-                        key="xbox"
-                        href={`https://www.xbox.com/es-ES/games/search?q=${encodeURIComponent(gameDetail.name)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="game-detail__store-btn xbox"
-                      >
-                        Xbox
-                      </a>
-                    ));
-                  } else if (hasNintendo && platformName.includes('nintendo')) {
-                    storeMap.set('Nintendo', (
-                      <a 
-                        key="nintendo"
-                        href={`https://www.nintendo.com/es-es/search?q=${encodeURIComponent(gameDetail.name)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="game-detail__store-btn nintendo"
-                      >
-                        Nintendo
-                      </a>
-                    ));
-                  } else if (hasEpic && platformName.includes('epic')) {
-                    storeMap.set('Epic Games', (
-                      <a 
-                        key="epic"
-                        href={`https://store.epicgames.com/p/${gameDetail.slug || ''}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="game-detail__store-btn epic"
-                      >
-                        Epic Games
-                      </a>
-                    ));
-                  }
-                });
-                
-                const storeButtons = Array.from(storeMap.values());
-                
-                if (storeButtons.length === 0) {
-                  return (
-                    <div className="game-detail__no-stores">
-                      <span>Información de tiendas no disponible</span>
+                {/* Plataformas para jugar */}
+                {gameDetail.platforms && gameDetail.platforms.length > 0 && (
+                  <div className="game-detail__platforms-subsection">
+                    <h4>Disponible en:</h4>
+                    <div className="game-detail__platforms">
+                      {(() => {
+                        const platformMap = new Map();
+                        gameDetail.platforms?.forEach(platform => {
+                          const platformName = platform.platform.name.toLowerCase();
+                          let normalizedPlatform;
+                          
+                          if (platformName.includes('playstation 4') || platformName.includes('playstation 5') || platformName.includes('ps4') || platformName.includes('ps5')) {
+                            normalizedPlatform = 'PlayStation';
+                          } else if (platformName.includes('xbox one') || platformName.includes('xbox series x') || platformName.includes('xbox series s') || platformName.includes('xbox')) {
+                            normalizedPlatform = 'Xbox';
+                          } else if (platformName.includes('nintendo') || platformName.includes('switch') || platformName.includes('wii') || platformName.includes('gamecube')) {
+                            normalizedPlatform = 'Nintendo';
+                          } else if (platformName.includes('steam')) {
+                            normalizedPlatform = 'Steam';
+                          } else if (platformName.includes('epic')) {
+                            normalizedPlatform = 'Epic Games';
+                          } else if (platformName.includes('gog') || platformName.includes('good old games')) {
+                            normalizedPlatform = 'GOG';
+                          } else if (platformName.includes('origin')) {
+                            normalizedPlatform = 'Origin';
+                          } else if (platformName.includes('uplay') || platformName.includes('ubisoft')) {
+                            normalizedPlatform = 'Ubisoft Connect';
+                          } else if (platformName.includes('microsoft store') || platformName.includes('windows store')) {
+                            normalizedPlatform = 'Microsoft Store';
+                          } else if (platformName.includes('android') || platformName.includes('ios') || platformName.includes('mobile')) {
+                            normalizedPlatform = 'Mobile';
+                          } else if (platformName.includes('web') || platformName.includes('browser')) {
+                            normalizedPlatform = 'Web';
+                          } else {
+                            normalizedPlatform = platform.platform.name;
+                          }
+                          
+                          platformMap.set(normalizedPlatform, normalizedPlatform);
+                        });
+                        
+                        return (
+                          <React.Fragment>
+                            {Array.from(platformMap.values()).map((platformName, index) => (
+                              <span key={`${platformName}-${index}`} className="game-detail__platform">
+                                {platformName}
+                              </span>
+                            ))}
+                          </React.Fragment>
+                        );
+                      })()}
                     </div>
-                  );
-                }
-                
-                return storeButtons;
-              })()}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
+      
+      {/* Sección de reseñas */}
+      <ReviewList gameId={gameDetail.id} gameName={gameDetail.name} />
     </div>
   );
 }

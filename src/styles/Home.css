@@ -12,7 +12,7 @@
 .home__title {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(45deg, #5B8CFF, #A78BFA);
+  background: linear-gradient(45deg, var(--primary-color), #A78BFA);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -20,7 +20,7 @@
 
 .home__slogan {
   font-size: 1.2rem;
-  color: #B8BDC9;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
   text-align: center;
   font-style: italic;
@@ -30,7 +30,7 @@
 .home__empty {
   text-align: center;
   padding: 3rem;
-  color: #7C8496;
+  color: var(--text-secondary);
 }
 
 .home__grid {
@@ -80,32 +80,32 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 107, 107, 0.2);
 }
- 
+
 .error__icon {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
- 
+
 .error__title {
-  color: #ff6b6b;
+  color: var(--error-color);
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
- 
+
 .error__message {
-  color: #e0e0e0;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
   font-size: 1.1rem;
   line-height: 1.5;
 }
- 
+
 .error__actions {
   display: flex;
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
 }
- 
+
 .error__retry-btn,
 .error__home-btn {
   padding: 0.75rem 1.5rem;
@@ -116,23 +116,23 @@
   transition: all 0.3s ease;
   font-size: 0.9rem;
 }
- 
+
 .error__retry-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-color), #A78BFA);
   color: white;
 }
- 
+
 .error__home-btn {
   background: transparent;
-  color: #5B8CFF;
-  border: 1px solid #5B8CFF;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
- 
+
 .error__retry-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
- 
+
 .error__home-btn:hover {
   background: rgba(91, 140, 255, 0.1);
   transform: translateY(-2px);
@@ -150,18 +150,15 @@
 }
 
 .home__auth-content h3 {
-  color: #ffffff;
+  color: var(--text-primary);
   font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 8px;
-  background: linear-gradient(135deg, #5B8CFF, #A78BFA);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .home__auth-content p {
-  color: #8892b0;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: 20px;
 }
@@ -183,7 +180,7 @@
 }
 
 .home__auth-btn--primary {
-  background: linear-gradient(135deg, #5B8CFF, #A78BFA);
+  background: linear-gradient(135deg, var(--primary-color), #A78BFA);
   color: #ffffff;
   border: none;
 }
@@ -195,7 +192,7 @@
 
 .home__auth-btn--secondary {
   background: rgba(91, 140, 255, 0.1);
-  color: #5B8CFF;
+  color: var(--primary-color);
   border: 1px solid rgba(91, 140, 255, 0.3);
 }
 

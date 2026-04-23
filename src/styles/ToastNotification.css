@@ -1,0 +1,135 @@
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 300px;
+  max-width: 400px;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: slideIn 0.3s ease-out;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.toast-notification--success {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #ffffff;
+  border-left: 4px solid #059669;
+}
+
+.toast-notification--error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  border-left: 4px solid #991b1b;
+}
+
+.toast-notification--warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  border-left: 4px solid #92400e;
+}
+
+.toast-notification--info {
+  background: linear-gradient(135deg, #5b8cff, #3730a3);
+  color: #ffffff;
+  border-left: 4px solid #1e40af;
+}
+
+.toast-notification__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast-notification__icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+
+.toast-notification__message {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.toast-notification__close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.toast-notification__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.toast-notification.toast-notification--removing {
+  animation: slideOut 0.3s ease-in-out forwards;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive para móviles */
+@media (max-width: 600px) {
+  .toast-notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+  
+  .toast-notification__content {
+    gap: 8px;
+  }
+  
+  .toast-notification__message {
+    font-size: 13px;
+  }
+  
+  .toast-notification__icon {
+    font-size: 16px;
+  }
+}

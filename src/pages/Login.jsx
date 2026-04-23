@@ -8,7 +8,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+  const [showPassword, setShowPassword] = useState(false);
+
   const { login } = useAuthContext();
   const navigate = useNavigate();
 
@@ -54,15 +55,25 @@ export default function Login() {
 
             <div className="login__form-group">
               <label htmlFor="password" className="login__label">Contraseña</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="login__input"
-                required
-                placeholder="••••••••"
-              />
+              <div className="login__password-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="login__input login__input--with-icon"
+                  required
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  className="login__password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
             </div>
 
             {error && <div className="login__error">{error}</div>}

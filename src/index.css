@@ -4,18 +4,48 @@
   box-sizing: border-box;
 }
 
+/* Variables CSS para temas */
+:root {
+  /* Tema oscuro (default) */
+  --bg-primary: #0F1115;
+  --bg-secondary: #171A21;
+  --bg-tertiary: #222734;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B8BDC9;
+  --text-muted: #7C8496;
+  --primary-color: #5B8CFF;
+  --primary-hover: #4A7AE8;
+  --border-color: #2A2F3A;
+  --navbar-bg: linear-gradient(135deg, #171A21 0%, #222734 100%);
+}
+
+[data-theme="light"] {
+  /* Tema claro - mejor contraste */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --bg-tertiary: #E9ECEF;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-muted: #6C757D;
+  --primary-color: #0066CC;
+  --primary-hover: #0052A3;
+  --border-color: #DEE2E6;
+  --navbar-bg: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0F1115;
-  color: #FFFFFF;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Error - Global styles */
 .error {
   text-align: center;
   padding: 3rem;
-  color: #5B8CFF;
+  color: var(--primary-color);
 }
 
 .error h2 {
@@ -23,5 +53,5 @@ body {
 }
 
 .error p {
-  color: #7C8496;
+  color: var(--text-muted);
 }

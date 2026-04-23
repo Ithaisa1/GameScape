@@ -160,6 +160,29 @@ export default function Profile() {
             </div>
 
             <div className="login__form-group">
+              <label htmlFor="currentPassword" className="login__label">Contraseña Actual (requerida para cambiar contraseña)</label>
+              <div className="login__password-wrapper">
+                <input
+                  type={showPasswords.current ? 'text' : 'password'}
+                  id="currentPassword"
+                  name="currentPassword"
+                  value={formData.currentPassword}
+                  onChange={handleChange}
+                  className="login__input login__input--with-icon"
+                  placeholder="Ingresa tu contraseña actual"
+                />
+                <button
+                  type="button"
+                  className="login__password-toggle"
+                  onClick={() => togglePasswordVisibility('current')}
+                  aria-label={showPasswords.current ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showPasswords.current ? "🙈" : "👁️"}
+                </button>
+              </div>
+            </div>
+
+            <div className="login__form-group">
               <label htmlFor="newPassword" className="login__label">Nueva Contraseña (opcional)</label>
               <div className="login__password-wrapper">
                 <input

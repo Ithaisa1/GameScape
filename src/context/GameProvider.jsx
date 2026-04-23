@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, createContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { getGames, searchGames, getGamesByGenre, searchGamesWithGenre, getGameById } from '../services/api';
+import { getGames, searchGames, getGamesByGenre, searchGamesWithGenre, getGameById, getGameStores } from '../services/api';
+import { useNotifications } from './NotificationProvider';
 
 export const GameContext = createContext();
 
@@ -10,6 +11,12 @@ export default function GameProvider({ children }) {
   const [selectedPlatform, setSelectedPlatform] = useState('');
   const [ratingSort, setRatingSort] = useState(''); // 'asc', 'desc', or ''
   const [currentPage, setCurrentPage] = useState(1);
+  
+  // Nuevos filtros avanzados
+  const [sortBy, setSortBy] = useState('relevance'); // 'relevance', 'rating', 'released', 'name', 'popularity'
+  const [yearRange, setYearRange] = useState({ min: '', max: '' });
+  const [selectedPlatforms, setSelectedPlatforms] = useState([]);
+  const [manualTrigger, setManualTrigger] = useState(0); // Para forzar actualización manual
   
   // API related state
   const [games, setGames] = useState([]);
@@ -25,6 +32,7 @@ export default function GameProvider({ children }) {
 
   // Get user from AuthContext
   const { user, isAuthenticated, updateProfile, addToSearchHistory } = useContext(AuthContext);
+  const { showNotification } = useNotifications();
 
   const addToFavorites = (game) => {
     if (!isAuthenticated || !user) return;
@@ -76,11 +84,91 @@ export default function GameProvider({ children }) {
         data = await getGames(currentPage);
       }
 
-      setGames(data.results);
-      setTotalCount(data.count);
+      // Apply advanced filters locally
+      let filteredGames = data.results;
+
+      // Filter by year range
+      if (yearRange.min || yearRange.max) {
+        filteredGames = filteredGames.filter(game => {
+          if (!game.released) return true;
+          const gameYear = new Date(game.released).getFullYear();
+          
+          if (yearRange.min && gameYear < parseInt(yearRange.min)) return false;
+          if (yearRange.max && gameYear > parseInt(yearRange.max)) return false;
+          
+          return true;
+        });
+      }
+
+      // Filter by platforms
+      if (selectedPlatforms.length > 0) {
+        filteredGames = filteredGames.filter(game => {
+          if (!game.platforms || game.platforms.length === 0) return false;
+          
+          return selectedPlatforms.some(selectedPlatform => {
+            return game.platforms.some(platform => {
+              const platformName = platform.platform.name.toLowerCase();
+              
+              switch(selectedPlatform) {
+                case 'pc':
+                  return platformName.includes('pc') || platformName.includes('windows');
+                case 'playstation':
+                  return platformName.includes('playstation') || platformName.includes('ps');
+                case 'xbox':
+                  return platformName.includes('xbox');
+                case 'nintendo':
+                  return platformName.includes('nintendo') || platformName.includes('switch');
+                case 'mobile':
+                  return platformName.includes('android') || platformName.includes('ios') || platformName.includes('mobile');
+                default:
+                  return false;
+              }
+            });
+          });
+        });
+      }
+
+      // Apply sorting
+      if (sortBy || ratingSort) {
+        filteredGames = [...filteredGames].sort((a, b) => {
+          // First apply rating sort if specified
+          if (ratingSort) {
+            const ratingA = a.rating || 0;
+            const ratingB = b.rating || 0;
+            return ratingSort === 'desc' ? ratingB - ratingA : ratingA - ratingB;
+          }
+          
+          // Then apply sortBy
+          switch(sortBy) {
+            case 'rating':
+              const ratingA = a.rating || 0;
+              const ratingB = b.rating || 0;
+              return ratingB - ratingA;
+            case 'released':
+              const dateA = a.released ? new Date(a.released) : new Date(0);
+              const dateB = b.released ? new Date(b.released) : new Date(0);
+              return dateB - dateA;
+            case 'name':
+              return a.name.localeCompare(b.name);
+            case 'popularity':
+              // Use rating as popularity proxy (could be enhanced with actual popularity metrics)
+              const popA = a.rating || 0;
+              const popB = b.rating || 0;
+              return popB - popA;
+            case 'relevance':
+            default:
+              // Keep original order for relevance
+              return 0;
+          }
+        });
+      }
+
+      setGames(filteredGames);
+      setTotalCount(filteredGames.length);
     } catch (err) {
       console.error('Error fetching games:', err);
       setError(err.message);
+      showNotification('Error al cargar juegos. Intenta nuevamente.', 'error');
     } finally {
       setLoading(false);
     }
@@ -101,24 +189,47 @@ export default function GameProvider({ children }) {
     try {
       setGameDetailLoading(true);
       setGameDetailError(null);
-      const gameData = await getGameById(id);
-      setGameDetail(gameData);
+      
+      // Fetch both game details and stores
+      const [gameData, storesData] = await Promise.all([
+        getGameById(id),
+        getGameStores(id)
+      ]);
+      
+      // Combine game data with stores
+      const gameWithStores = {
+        ...gameData,
+        stores: storesData.results || []
+      };
+      
+      setGameDetail(gameWithStores);
       setGameDetailError(null);
       
       // Add to cache
-      setGameDetailCache(prev => new Map(prev).set(id, gameData));
+      setGameDetailCache(prev => new Map(prev).set(id, gameWithStores));
     } catch (err) {
       setGameDetailError('No se pudo cargar la información del juego');
       console.error('Error fetching game detail:', err);
+      showNotification('No se pudo cargar la información del juego. Intenta nuevamente.', 'error');
     } finally {
       setGameDetailLoading(false);
     }
   };
 
-  // Fetch games whenever dependencies change
+  // Listen for manual filter application
+  useEffect(() => {
+    const handleApplyFilters = () => {
+      setManualTrigger(prev => prev + 1);
+    };
+
+    window.addEventListener('applyFilters', handleApplyFilters);
+    return () => window.removeEventListener('applyFilters', handleApplyFilters);
+  }, []);
+
+  // Fetch games whenever dependencies change (only basic filters + manual trigger)
   useEffect(() => {
     fetchGames();
-  }, [searchQuery, selectedGenre, currentPage]);
+  }, [searchQuery, selectedGenre, currentPage, manualTrigger]);
 
   return (
     <GameContext.Provider
@@ -137,6 +248,13 @@ export default function GameProvider({ children }) {
         setRatingSort,
         currentPage,
         setCurrentPage,
+        // Nuevos filtros avanzados
+        sortBy,
+        setSortBy,
+        yearRange,
+        setYearRange,
+        selectedPlatforms,
+        setSelectedPlatforms,
         // API related
         games,
         loading,

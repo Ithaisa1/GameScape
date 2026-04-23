@@ -95,9 +95,40 @@
 .game-card__meta {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
   color: #B8BDC9;
+}
+
+.game-card__ratings {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.game-card__rating-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+}
+
+.game-card__rating-label {
+  color: #8B92A8;
+  font-size: 0.7rem;
+  min-width: 50px;
+}
+
+.game-card__rating-value {
+  color: #34D399;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.game-card__rating-value.user {
+  color: #5B8CFF;
 }
 
 .game-card__rating {

@@ -83,3 +83,20 @@ export const getGenres = async () => {
 
   return response.json();
 };
+
+export const getGameStores = async (gameId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/games/${gameId}/stores?key=${API_KEY}`);
+    
+    if (!response.ok) {
+      throw new Error("Error al obtener tiendas del juego");
+    }
+
+    const data = await response.json();
+    console.log('Stores API response:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching stores:', error);
+    return { results: [] };
+  }
+};

@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../styles/Navbar.css';
+import { useTheme } from '../context/ThemeProvider';
 
 export default function Navbar() {
   const { isAuthenticated, logout, user, loading } = useAuthContext();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-
+  const { theme, toggleTheme } = useTheme();
   if (loading) {
     return (
       <nav className="navbar">
@@ -38,6 +39,10 @@ export default function Navbar() {
             Favorites
           </Link>
         )}
+
+        <button onClick={toggleTheme} className="navbar__theme-toggle" aria-label='Cambiar tema'>
+          {theme === 'dark' ? '🌙' : '☀️'}
+        </button>
         
         {isAuthenticated && (
           <div className="navbar__profile">
@@ -68,6 +73,13 @@ export default function Navbar() {
                   onClick={() => setShowProfileMenu(false)}
                 >
                   <span>Editar Perfil</span>
+                </Link>
+                <Link 
+                  to="/settings" 
+                  className="navbar__profile-menu-item"
+                  onClick={() => setShowProfileMenu(false)}
+                >
+                  <span>⚙️ Configuración</span>
                 </Link>
                 <button 
                   className="navbar__profile-menu-item navbar__profile-menu-item--logout"

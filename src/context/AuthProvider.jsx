@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
+import { useNotifications } from './NotificationProvider';
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { showNotification } = useNotifications();
 
   // Cargar usuario desde localStorage al iniciar
   useEffect(() => {
@@ -34,11 +36,14 @@ export default function AuthProvider({ children }) {
         setUser(existingUser);
         localStorage.setItem('token', `token-${existingUser.email}`);
         localStorage.setItem('userData', JSON.stringify(existingUser));
+        showNotification(`¡Bienvenido de nuevo, ${existingUser.name || existingUser.nick}!`, 'success');
         return { success: true };
       } else {
+        showNotification('Email o contraseña incorrectos', 'error');
         return { success: false, error: 'Email o contraseña incorrectos' };
       }
     } catch (error) {
+      showNotification('Error al iniciar sesión', 'error');
       return { success: false, error: 'Error al iniciar sesión' };
     }
   };
@@ -50,11 +55,13 @@ export default function AuthProvider({ children }) {
       
       // Verificar si el email ya existe
       if (users.find(u => u.email === userData.email)) {
+        showNotification('El email ya está registrado', 'error');
         return { success: false, error: 'El email ya está registrado' };
       }
       
       // Verificar si el nick ya existe
       if (users.find(u => u.nick === userData.nick)) {
+        showNotification('El nick ya está en uso', 'error');
         return { success: false, error: 'El nick ya está en uso' };
       }
       
@@ -79,8 +86,10 @@ export default function AuthProvider({ children }) {
       localStorage.setItem('token', `token-${newUser.email}`);
       localStorage.setItem('userData', JSON.stringify(newUser));
       
+      showNotification(`¡Bienvenido a GameScape, ${newUser.name || newUser.nick}!`, 'success');
       return { success: true };
     } catch (error) {
+      showNotification('Error al registrar usuario', 'error');
       return { success: false, error: 'Error al registrar usuario' };
     }
   };
