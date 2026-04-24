@@ -39,14 +39,19 @@ export default function Navbar() {
             Favorites
           </Link>
         )}
-
-        <button onClick={toggleTheme} className={styles.navbarThemeToggle} aria-label='Cambiar tema'>
-          {theme === 'dark' ? '🌙' : '☀️'}
-        </button>
       </div>
-      
+
+      {isAuthenticated && (
+        <Link to="/favorites" className={styles.navbarMobileFavorites}>
+          Favorites
+        </Link>
+      )}
+
       {isAuthenticated && (
         <div className={styles.navbarProfile}>
+          <button onClick={toggleTheme} className={styles.navbarThemeToggle} aria-label='Cambiar tema'>
+            {theme === 'dark' ? '🌙' : '☀️'}
+          </button>
           <div 
             className={styles.navbarProfileTrigger}
             onClick={() => setShowProfileMenu(!showProfileMenu)}
