@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useNotifications } from '../context/NotificationProvider';
-import StarRating from './StarRating';
-import ReviewForm from './ReviewForm';
-import '../styles/ReviewList.css';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useNotifications } from '../../context/NotificationProvider';
+import StarRating from '../StarRating/StarRating';
+import ReviewForm from '../ReviewForm/ReviewForm';
+import styles from './ReviewList.module.css';
 
 export default function ReviewList({ gameId, gameName }) {
   const { user, isAuthenticated } = useAuthContext();
@@ -147,9 +147,9 @@ export default function ReviewList({ gameId, gameName }) {
 
   if (loading) {
     return (
-      <div className="review-list">
-        <div className="review-list__loading">
-          <div className="review-list__spinner"></div>
+      <div className={styles.reviewList}>
+        <div className={styles.reviewListLoading}>
+          <div className={styles.reviewListSpinner}></div>
           <p>Cargando reseñas...</p>
         </div>
       </div>
@@ -158,28 +158,28 @@ export default function ReviewList({ gameId, gameName }) {
 
   return (
     <div className="review-list">
-      <div className="review-list__header">
-        <h2 className="review-list__title">Reseñas de {gameName}</h2>
+      <div className={styles.reviewListHeader}>
+        <h2 className={styles.reviewListTitle}>Reseñas de {gameName}</h2>
         
         {reviews.length > 0 && (
-          <div className="review-list__stats">
-            <div className="review-list__average">
-              <span className="review-list__average-value">{averageRating}</span>
+          <div className={styles.reviewListStats}>
+            <div className={styles.reviewListAverage}>
+              <span className={styles.reviewListAverageValue}>{averageRating}</span>
               <StarRating rating={parseFloat(averageRating)} readonly={true} size="large" />
-              <span className="review-list__total-count">({reviews.length} reseñas)</span>
+              <span className={styles.reviewListTotalCount}>({reviews.length} reseñas)</span>
             </div>
             
-            <div className="review-list__distribution">
+            <div className={styles.reviewListDistribution}>
               {Object.entries(ratingDistribution).reverse().map(([rating, count]) => (
-                <div key={rating} className="review-list__distribution-item">
-                  <span className="review-list__distribution-label">{rating} ⭐</span>
-                  <div className="review-list__distribution-bar">
+                <div key={rating} className={styles.reviewListDistributionItem}>
+                  <span className={styles.reviewListDistributionLabel}>{rating} ⭐</span>
+                  <div className={styles.reviewListDistributionBar}>
                     <div 
-                      className="review-list__distribution-fill"
+                      className={styles.reviewListDistributionFill}
                       style={{ width: `${reviews.length > 0 ? (count / reviews.length) * 100 : 0}%` }}
                     ></div>
                   </div>
-                  <span className="review-list__distribution-count">{count}</span>
+                  <span className={styles.reviewListDistributionCount}>{count}</span>
                 </div>
               ))}
             </div>
@@ -187,14 +187,14 @@ export default function ReviewList({ gameId, gameName }) {
         )}
       </div>
 
-      <div className="review-list__controls">
-        <div className="review-list__sort">
-          <label htmlFor="sort-reviews" className="review-list__sort-label">Ordenar por:</label>
+      <div className={styles.reviewListControls}>
+        <div className={styles.reviewListSort}>
+          <label htmlFor="sort-reviews" className={styles.reviewListSortLabel}>Ordenar por:</label>
           <select
             id="sort-reviews"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="review-list__sort-select"
+            className={styles.reviewListSortSelect}
           >
             <option value="newest">Más recientes</option>
             <option value="oldest">Más antiguas</option>
@@ -215,27 +215,27 @@ export default function ReviewList({ gameId, gameName }) {
 
       {/* Lista de reseñas */}
       {sortedReviews.length === 0 ? (
-        <div className="review-list__empty">
-          <div className="review-list__empty-icon">📝</div>
+        <div className={styles.reviewListEmpty}>
+          <div className={styles.reviewListEmptyIcon}>📝</div>
           <h3>Sin reseñas aún</h3>
           <p>Sé el primero en compartir tu opinión sobre {gameName}</p>
         </div>
       ) : (
-        <div className="review-list__reviews">
+        <div className={styles.reviewListReviews}>
           {sortedReviews.map((review) => (
-            <div key={review.id} className="review-item">
-              <div className="review-item__header">
-                <div className="review-item__user">
-                  <div className="review-item__user-info">
-                    <h4 className="review-item__user-name">{review.userName}</h4>
-                    <span className="review-item__user-nick">@{review.userNick}</span>
+            <div key={review.id} className={styles.reviewItem}>
+              <div className={styles.reviewItemHeader}>
+                <div className={styles.reviewItemUser}>
+                  <div className={styles.reviewItemUserInfo}>
+                    <h4 className={styles.reviewItemUserName}>{review.userName}</h4>
+                    <span className={styles.reviewItemUserNick}>@{review.userNick}</span>
                   </div>
-                  <div className="review-item__rating">
+                  <div className={styles.reviewItemRating}>
                     <StarRating rating={review.rating} readonly={true} size="small" />
                   </div>
                 </div>
-                <div className="review-item__meta">
-                  <span className="review-item__date">
+                <div className={styles.reviewItemMeta}>
+                  <span className={styles.reviewItemDate}>
                     {new Date(review.createdAt).toLocaleDateString('es-ES', {
                       year: 'numeric',
                       month: 'long',
@@ -243,27 +243,27 @@ export default function ReviewList({ gameId, gameName }) {
                     })}
                   </span>
                   {review.updatedAt !== review.createdAt && (
-                    <span className="review-item__edited">(editada)</span>
+                    <span className={styles.reviewItemEdited}>(editada)</span>
                   )}
                 </div>
               </div>
               
-              <div className="review-item__content">
-                <p className="review-item__text">{review.text}</p>
+              <div className={styles.reviewItemContent}>
+                <p className={styles.reviewItemText}>{review.text}</p>
               </div>
               
-              <div className="review-item__actions">
-                <div className="review-item__helpful">
-                  <span className="review-item__helpful-label">¿Útil?</span>
+              <div className={styles.reviewItemActions}>
+                <div className={styles.reviewItemHelpful}>
+                  <span className={styles.reviewItemHelpfulLabel}>¿Útil?</span>
                   <button
-                    className="review-item__helpful-btn"
+                    className={styles.reviewItemHelpfulBtn}
                     onClick={() => handleHelpfulVote(review.id, true)}
                     disabled={!isAuthenticated}
                   >
                     👍 {review.helpful || 0}
                   </button>
                   <button
-                    className="review-item__helpful-btn"
+                    className={styles.reviewItemHelpfulBtn}
                     onClick={() => handleHelpfulVote(review.id, false)}
                     disabled={!isAuthenticated}
                   >
@@ -272,15 +272,15 @@ export default function ReviewList({ gameId, gameName }) {
                 </div>
                 
                 {isAuthenticated && user && review.userId === user.id && (
-                  <div className="review-item__user-actions">
+                  <div className={styles.reviewItemUserActions}>
                     <button
-                      className="review-item__edit-btn"
+                      className={styles.reviewItemEditBtn}
                       onClick={() => handleEditReview(review)}
                     >
                       ✏️ Editar
                     </button>
                     <button
-                      className="review-item__delete-btn"
+                      className={styles.reviewItemDeleteBtn}
                       onClick={() => handleDeleteReview(review.id)}
                     >
                       🗑️ Eliminar

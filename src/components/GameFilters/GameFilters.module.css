@@ -1,0 +1,419 @@
+.gameFilters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 100%;
+  padding: 1rem;
+  align-items: start;
+}
+
+.gameFiltersBasic {
+  display: contents;
+}
+
+.gameFiltersActions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.gameFiltersItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0.5rem;
+  background-color: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.gameFiltersItem label {
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gameFiltersSelect {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Botón de filtros avanzados separado */
+.gameFiltersAdvancedBtn {
+  background-color: #5B8CFF;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(91, 140, 255, 0.3);
+}
+
+.gameFiltersAdvancedBtn:hover {
+  background-color: #4A7DD8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(91, 140, 255, 0.3);
+}
+
+.gameFiltersSelect:hover {
+  border-color: var(--primary-color);
+  background-color: var(--bg-tertiary);
+}
+
+.gameFiltersSelect:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.2);
+}
+
+.gameFiltersSelect option {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Estilos para filtros básicos */
+.gameFiltersBasic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.gameFiltersActions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.gameFiltersToggle,
+.gameFiltersApply,
+.gameFiltersClear {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.gameFiltersToggle:hover,
+.gameFiltersApply:hover,
+.gameFiltersClear:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.gameFiltersApply {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  font-weight: 600;
+}
+
+.gameFiltersApply:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Estilos para filtros avanzados */
+.gameFiltersAdvanced {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gameFiltersSection {
+  margin-bottom: 1.5rem;
+}
+
+.gameFiltersSection:last-child {
+  margin-bottom: 0;
+}
+
+.gameFiltersSectionTitle {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gameFiltersRange {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+}
+
+.gameFiltersRangeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.gameFiltersRangeItem label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.gameFiltersInput {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.gameFiltersInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(91, 140, 255, 0.1);
+}
+
+.gameFiltersPlatforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.gameFiltersCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+.gameFiltersCheckbox:hover {
+  color: var(--primary-color);
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+}
+
+.gameFiltersCheckbox input {
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.gameFiltersAdvancedActions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Responsive breakpoints */
+/* Mobile Responsive */
+@media (max-width: 575px) {
+  .gameFilters {
+    padding: 1rem 0.5rem;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .gameFiltersBasic {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .gameFiltersItem {
+    width: 100%;
+    min-width: auto;
+    flex: none;
+  }
+  
+  .gameFiltersSelect {
+    width: 100%;
+    min-width: auto;
+    font-size: 0.9rem;
+  }
+  
+  .gameFiltersAdvanced {
+    width: 100%;
+    padding: 1rem 0.5rem;
+    overflow-x: hidden;
+  }
+  
+  .gameFiltersAdvancedContent {
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .gameFiltersRange {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .gameFiltersRange input {
+    width: 100%;
+  }
+  
+  .gameFiltersPlatforms {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .gameFiltersCheckbox {
+    width: 100%;
+    min-width: auto;
+    flex: none;
+  }
+  
+  .gameFiltersAdvancedActions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  
+  .gameFiltersAdvancedActions button {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 576px) {
+  .gameFiltersBasic {
+    gap: 1.25rem;
+  }
+
+  .gameFiltersItem {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .gameFiltersSelect {
+    min-width: 100%;
+  }
+
+  .gameFiltersActions {
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .gameFiltersRange {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .gameFiltersPlatforms {
+    gap: 0.75rem;
+  }
+
+  .gameFiltersCheckbox {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+@media (min-width: 768px) {
+  .gameFiltersBasic {
+    gap: 1.5rem;
+  }
+
+  .gameFiltersItem {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .gameFiltersActions {
+    width: auto;
+    justify-content: flex-end;
+    gap: 1.5rem;
+  }
+
+  .gameFiltersRange {
+    gap: 1.25rem;
+  }
+
+  .gameFiltersPlatforms {
+    gap: 1rem;
+  }
+
+  .gameFiltersCheckbox {
+    flex: 1;
+    min-width: 140px;
+  }
+}
+
+@media (min-width: 992px) {
+  .gameFiltersBasic {
+    gap: 2rem;
+  }
+
+  .gameFiltersItem {
+    min-width: 200px;
+  }
+
+  .gameFiltersActions {
+    gap: 2rem;
+  }
+
+  .gameFiltersPlatforms {
+    gap: 1.25rem;
+  }
+
+  .gameFiltersCheckbox {
+    min-width: 160px;
+  }
+}

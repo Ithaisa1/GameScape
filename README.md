@@ -90,8 +90,8 @@ Buscador de videojuegos que permite a los usuarios encontrar títulos de forma r
 
 ### Día 1 (23/04/2026)
 - **Inicio**: 10:00 AM
-- **Fin**: 2:00 PM  
-- **Total**: 4 horas
+- **Fin**: 10:00 PM  
+- **Total**: 12 horas
 - **Tareas completadas**: Búsqueda básica, filtros, grid responsive, favoritos, paginación
 
 ### Día 2 (24/04/2026)

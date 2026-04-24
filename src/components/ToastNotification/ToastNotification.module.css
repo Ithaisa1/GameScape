@@ -1,0 +1,200 @@
+.toastNotification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 300px;
+  max-width: 400px;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: slideIn 0.3s ease-out;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.toastNotificationSuccess {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #ffffff;
+  border-left: 4px solid #059669;
+}
+
+.toastNotificationError {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  border-left: 4px solid #991b1b;
+}
+
+.toastNotificationWarning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  border-left: 4px solid #92400e;
+}
+
+.toastNotificationInfo {
+  background: linear-gradient(135deg, #5b8cff, #3730a3);
+  color: #ffffff;
+  border-left: 4px solid #1e40af;
+}
+
+.toastNotificationContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toastNotificationIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+
+.toastNotificationMessage {
+  flex: 1;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.toastNotificationClose {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toastNotificationClose:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.toastNotification.hiding {
+  animation: slideOut 0.3s ease-out forwards;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Stack multiple toasts */
+.toastNotification:nth-child(2) {
+  top: 80px;
+}
+
+.toastNotification:nth-child(3) {
+  top: 140px;
+}
+
+.toastNotification:nth-child(4) {
+  top: 200px;
+}
+
+.toastNotification:nth-child(n+5) {
+  top: 260px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .toastNotification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+
+  .toastNotification:nth-child(2) {
+    top: 70px;
+  }
+
+  .toastNotification:nth-child(3) {
+    top: 130px;
+  }
+
+  .toastNotification:nth-child(4) {
+    top: 190px;
+  }
+
+  .toastNotification:nth-child(n+5) {
+    top: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toastNotification {
+    top: 5px;
+    right: 5px;
+    left: 5px;
+    padding: 12px;
+  }
+
+  .toastNotificationIcon {
+    font-size: 16px;
+  }
+
+  .toastNotificationMessage {
+    font-size: 0.9rem;
+  }
+
+  .toastNotificationClose {
+    font-size: 14px;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .toastNotification {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .toastNotification {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .toastNotificationSuccess {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+[data-theme="light"] .toastNotificationError {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+[data-theme="light"] .toastNotificationWarning {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+[data-theme="light"] .toastNotificationInfo {
+  background: linear-gradient(135deg, #3730a3, #5b8cff);
+}

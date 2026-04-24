@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useGameContext } from '../hooks/useGameContext';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { searchSuggestions } from '../services/api';
-import SearchSuggestions from './SearchSuggestions';
-import '../styles/SearchBar.css';
+import { useGameContext } from '../../hooks/useGameContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { searchSuggestions } from '../../services/api';
+import SearchSuggestions from '../SearchSuggestions/SearchSuggestions';
+import styles from './SearchBar.module.css';
 
 export default function SearchBar() {
   const { searchQuery, setSearchQuery } = useGameContext();
@@ -100,11 +100,11 @@ export default function SearchBar() {
   }, []);
 
   return (
-    <form className="search-bar" onSubmit={handleSubmit}>
-      <div className="search-bar__input-wrapper" ref={searchRef}>
+    <form className={styles.searchBar} onSubmit={handleSubmit}>
+      <div className={styles.searchBarInputWrapper} ref={searchRef}>
         <input
           type="text"
-          className="search-bar__input"
+          className={styles.searchBarInput}
           placeholder="Search games..."
           value={localQuery}
           onChange={handleChange}
@@ -113,7 +113,7 @@ export default function SearchBar() {
         {showClearButton && (
           <button
             type="button"
-            className="search-bar__clear"
+            className={styles.searchBarClear}
             onClick={handleClear}
           >
             &#10005;
@@ -122,11 +122,11 @@ export default function SearchBar() {
       </div>
 
       {showSuggestions && suggestions.length > 0 && (
-        <div className="search-bar__suggestions">
+        <div className={styles.searchBarSuggestions}>
           {suggestions.map((game) => (
             <div
               key={game.id}
-              className="search-bar__suggestion"
+              className={styles.searchBarSuggestion}
               onClick={() => handleSuggestionClick(game.name)}
             >
               {game.name}
@@ -136,12 +136,12 @@ export default function SearchBar() {
       )}
 
       {user && (
-        <div className="search-bar__suggestions-container">
+        <div className={styles.searchBarSuggestionsContainer}>
           <SearchSuggestions />
         </div>
       )}
 
-      <button type="submit" className="search-bar__button">
+      <button type="submit" className={styles.searchBarButton}>
         <svg
           width="20"
           height="20"

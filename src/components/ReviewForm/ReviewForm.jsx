@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useNotifications } from '../context/NotificationProvider';
-import StarRating from './StarRating';
-import '../styles/ReviewForm.css';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useNotifications } from '../../context/NotificationProvider';
+import StarRating from '../StarRating/StarRating';
+import styles from './ReviewForm.module.css';
 
 export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existingReview = null }) {
   const { user, isAuthenticated } = useAuthContext();
@@ -109,9 +109,9 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
 
   if (!showForm && !existingReview) {
     return (
-      <div className="review-form__trigger">
+      <div className={styles.reviewFormTrigger}>
         <button 
-          className="review-form__trigger-btn"
+          className={styles.reviewFormTriggerBtn}
           onClick={() => setShowForm(true)}
           disabled={!isAuthenticated}
         >
@@ -122,14 +122,14 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
   }
 
   return (
-    <div className="review-form">
-      <div className="review-form__header">
-        <h3 className="review-form__title">
+    <div className={styles.reviewForm}>
+      <div className={styles.reviewFormHeader}>
+        <h3 className={styles.reviewFormTitle}>
           {existingReview ? '✏️ Editar tu reseña' : '✍️ Escribe una reseña'}
         </h3>
         {existingReview && (
           <button 
-            className="review-form__cancel-btn"
+            className={styles.reviewFormCancelBtn}
             onClick={handleCancel}
           >
             Cancelar
@@ -138,14 +138,14 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
       </div>
 
       {!isAuthenticated && (
-        <div className="review-form__auth-notice">
+        <div className={styles.reviewFormAuthNotice}>
           <p>Debes <a href="/login">iniciar sesión</a> para dejar una reseña</p>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="review-form__form">
-        <div className="review-form__rating">
-          <label className="review-form__label">Tu calificación:</label>
+      <form onSubmit={handleSubmit} className={styles.reviewFormForm}>
+        <div className={styles.reviewFormRating}>
+          <label className={styles.reviewFormLabel}>Tu calificación:</label>
           <StarRating 
             rating={rating}
             onRatingChange={setRating}
@@ -155,8 +155,8 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
           />
         </div>
 
-        <div className="review-form__text">
-          <label htmlFor="review-text" className="review-form__label">
+        <div className={styles.reviewFormText}>
+          <label htmlFor="review-text" className={styles.reviewFormLabel}>
             Tu reseña:
           </label>
           <textarea
@@ -164,21 +164,21 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
             placeholder={`¿Qué te pareció ${gameName}? Cuéntale a otros jugadores tu experiencia...`}
-            className="review-form__textarea"
+            className={styles.reviewFormTextarea}
             rows={4}
             maxLength={1000}
             disabled={!isAuthenticated}
             required
           />
-          <div className="review-form__char-count">
+          <div className={styles.reviewFormCharCount}>
             {reviewText.length}/1000 caracteres
           </div>
         </div>
 
-        <div className="review-form__actions">
+        <div className={styles.reviewFormActions}>
           <button
             type="button"
-            className="review-form__cancel-btn"
+            className={styles.reviewFormCancelBtn}
             onClick={handleCancel}
             disabled={isSubmitting}
           >
@@ -186,7 +186,7 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
           </button>
           <button
             type="submit"
-            className="review-form__submit-btn"
+            className={styles.reviewFormSubmitBtn}
             disabled={!isAuthenticated || isSubmitting}
           >
             {isSubmitting ? 'Publicando...' : (existingReview ? 'Actualizar' : 'Publicar')}

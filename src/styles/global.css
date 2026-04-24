@@ -26,15 +26,16 @@ body {
   width: 100vw !important;
 }
 
-/* Prevenir scroll horizontal en todos los elementos */
-*, *::before, *::after {
-  overflow-x: hidden;
-}
-
-/* Elementos específicos que pueden causar scroll horizontal */
-.container, .main, .app, .home, .game-filters, .game-card, .navbar {
+/* Prevenir scroll horizontal en elementos específicos (no afectar dropdowns) */
+.container, .main, .home, .game-filters, .game-card {
   max-width: 100% !important;
   overflow-x: hidden !important;
+}
+
+/* Permitir overflow en navbar para dropdown menus */
+.navbar {
+  max-width: 100% !important;
+  overflow: visible !important;
 }
 
 /* Prevenir scroll horizontal en todos los elementos */

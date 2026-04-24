@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
-import '../styles/SearchHistory.css';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import styles from './SearchHistory.module.css';
 
 export default function SearchHistory() {
   const { getSearchHistory, clearSearchHistory } = useAuthContext();
@@ -39,8 +39,8 @@ export default function SearchHistory() {
 
   if (!searchHistory || searchHistory.length === 0) {
     return (
-      <div className="search-history">
-        <div className="search-history__empty">
+      <div className={styles.searchHistory}>
+        <div className={styles.searchHistoryEmpty}>
           <h3>Historial de Búsquedas</h3>
           <p>No tienes búsquedas recientes</p>
           <p>Las búsquedas se guardarán automáticamente cuando busques juegos</p>
@@ -51,11 +51,11 @@ export default function SearchHistory() {
 
   return (
     <div className="search-history">
-      <div className="search-history__header">
+      <div className={styles.searchHistoryHeader}>
         <h3>Historial de Búsquedas</h3>
-        <div className="search-history__actions">
+        <div className={styles.searchHistoryActions}>
           <button 
-            className="search-history__clear-btn"
+            className={styles.searchHistoryClearBtn}
             onClick={() => setShowClearConfirm(true)}
           >
             🗑️ Limpiar Historial
@@ -63,20 +63,20 @@ export default function SearchHistory() {
         </div>
       </div>
       
-      <div className="search-history__list">
+      <div className={styles.searchHistoryList}>
         {searchHistory.map((item) => (
-          <div key={item.id} className="search-history__item">
-            <div className="search-history__query">
-              <span className="search-history__text">{item.query}</span>
+          <div key={item.id} className={styles.searchHistoryItem}>
+            <div className={styles.searchHistoryQuery}>
+              <span className={styles.searchHistoryText}>{item.query}</span>
               <button 
-                className="search-history__search-btn"
+                className={styles.searchHistorySearchBtn}
                 onClick={() => handleSearchAgain(item.query)}
                 title="Buscar de nuevo"
               >
                 🔍
               </button>
             </div>
-            <div className="search-history__timestamp">
+            <div className={styles.searchHistoryTimestamp}>
               {formatTimestamp(item.timestamp)}
             </div>
           </div>
@@ -84,19 +84,19 @@ export default function SearchHistory() {
       </div>
 
       {showClearConfirm && (
-        <div className="search-history__confirm-modal">
-          <div className="search-history__confirm-content">
+        <div className={styles.searchHistoryConfirmModal}>
+          <div className={styles.searchHistoryConfirmContent}>
             <h4>¿Limpiar historial de búsquedas?</h4>
             <p>Se eliminarán todas tus búsquedas guardadas</p>
-            <div className="search-history__confirm-buttons">
+            <div className={styles.searchHistoryConfirmButtons}>
               <button 
-                className="search-history__cancel-btn"
+                className={styles.searchHistoryCancelBtn}
                 onClick={() => setShowClearConfirm(false)}
               >
                 Cancelar
               </button>
               <button 
-                className="search-history__confirm-btn"
+                className={styles.searchHistoryConfirmBtn}
                 onClick={handleClearHistory}
               >
                 Limpiar

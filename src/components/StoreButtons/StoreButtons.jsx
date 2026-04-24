@@ -1,17 +1,17 @@
 import React from 'react';
-import '../styles/StoreButtons.css';
+import styles from './StoreButtons.module.css';
 
 // Importar logos directamente
-import steamLogo from '../assets/stores/logo-steam.png';
-import microsoftStoreLogo from '../assets/stores/logo-microsoft-store.png';
-import xboxLogo from '../assets/stores/logo-xbox.png';
-import playstationLogo from '../assets/stores/logo-playstation.png';
-import gogLogo from '../assets/stores/logo-gog.png';
-import epicGamesLogo from '../assets/stores/logo-epic-games.png';
-import nintendoLogo from '../assets/stores/logo-nintendo.png';
-import eaLogo from '../assets/stores/logo-ea.png';
-import ubisoftLogo from '../assets/stores/logo-ubisoft.png';
-import activisionBlizzardLogo from '../assets/stores/logo-activision-blizzard.png';
+import steamLogo from '../../assets/stores/logo-steam.png';
+import microsoftStoreLogo from '../../assets/stores/logo-microsoft-store.png';
+import xboxLogo from '../../assets/stores/logo-xbox.png';
+import playstationLogo from '../../assets/stores/logo-playstation.png';
+import gogLogo from '../../assets/stores/logo-gog.png';
+import epicGamesLogo from '../../assets/stores/logo-epic-games.png';
+import nintendoLogo from '../../assets/stores/logo-nintendo.png';
+import eaLogo from '../../assets/stores/logo-ea.png';
+import ubisoftLogo from '../../assets/stores/logo-ubisoft.png';
+import activisionBlizzardLogo from '../../assets/stores/logo-activision-blizzard.png';
 
 // Mapeo de store_id a nombres de tiendas
 const getStoreName = (storeId) => {
@@ -71,32 +71,32 @@ export default function StoreButtons({ stores }) {
     
     if (!stores || stores.length === 0){
         return (
-            <div className="store-buttons__no-stores">
+            <div className={styles.storeButtonsNoStores}>
                 No hay tiendas disponibles para este juego
             </div>
         );
     }
     
     return (
-        <div className="store-buttons">
+        <div className={styles.storeButtons}>
             {stores.map((store) => (
                 <a 
                     key={store.store_id || store.id} 
                     href={store.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className={`store-buttons__btn store-buttons__btn--${getStoreClass(store.store_id)}`}
+                    className={`${styles.storeButtonsBtn} ${styles[`storeButtonsBtn${getStoreClass(store.store_id).charAt(0).toUpperCase() + getStoreClass(store.store_id).slice(1)}`]}`}
                 >
-                    <div className="store-buttons__content">
+                    <div className={styles.storeButtonsContent}>
                         <img 
                             src={getStoreLogo(store.store_id)} 
                             alt={getStoreName(store.store_id)}
-                            className="store-buttons__logo"
+                            className={styles.storeButtonsLogo}
                             onError={(e) => {
                                 e.target.style.display = 'none';
                             }}
                         />
-                        <span className="store-buttons__name">
+                        <span className={styles.storeButtonsName}>
                             {getStoreName(store.store_id)}
                         </span>
                     </div>

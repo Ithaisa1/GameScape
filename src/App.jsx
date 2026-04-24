@@ -1,11 +1,10 @@
 import './index.css';
-import NotificationProvider from './context/NotificationProvider';
-import { useNotifications } from './context/NotificationProvider';
-import ToastNotification from './components/ToastNotification';
+import { useNotifications } from './hooks/useNotifications';
+import ToastNotification from './components/ToastNotification/ToastNotification';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
 import GameProvider from './context/GameProvider';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home';
 import GameDetail from './pages/GameDetail';
 import Favorites from './pages/Favorites';
@@ -13,9 +12,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import ProtectedRoute from './components/ProtectedRoute';
-import './index.css';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { ThemeProvider } from './context/ThemeProvider';
+import NotificationProvider from './context/NotificationProvider';
 
 function AppContent() {
   const { notifications, clearNotification } = useNotifications();

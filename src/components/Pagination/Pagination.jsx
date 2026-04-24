@@ -1,4 +1,4 @@
-import '../styles/Pagination.css';
+import styles from './Pagination.module.css';
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
   // Responsive page range based on screen size (simulated)
@@ -51,20 +51,20 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
   };
 
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       <button
-        className="pagination__button"
+        className={styles.paginationButton}
         onClick={handlePrev}
         disabled={currentPage === 1}
       >
         ← Anterior
       </button>
 
-      <div className="pagination__numbers">
+      <div className={styles.paginationNumbers}>
         {pages.map((page) => (
           <button
             key={page}
-            className={`pagination__page ${currentPage === page ? 'active' : ''}`}
+            className={`${styles.paginationPage} ${currentPage === page ? styles.active : ''}`}
             onClick={() => onPageChange(page)}
           >
             {page}
@@ -73,7 +73,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       </div>
 
       <button
-        className="pagination__button"
+        className={styles.paginationButton}
         onClick={handleNext}
         disabled={currentPage === totalPages}
       >

@@ -1,0 +1,173 @@
+.starRating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.starRatingStars {
+  display: flex;
+  gap: 2px;
+}
+
+.starRatingStar {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.starRatingStar.interactive:hover {
+  transform: scale(1.1);
+}
+
+.starRatingStar.readonly {
+  cursor: default;
+}
+
+.starRatingStar .star {
+  font-size: inherit;
+  line-height: 1;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.starRatingStar.interactive .star {
+  cursor: pointer;
+}
+
+.starRatingStar .star.filled {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.starRatingStar .star.half {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.starRatingStar .star.empty {
+  color: #4a5568;
+  opacity: 0.6;
+}
+
+.starRatingValue {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-left: 4px;
+}
+
+.starRatingCount {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-left: 4px;
+}
+
+/* Interactive hover effects */
+.starRatingStar.interactive:hover .star.empty {
+  color: #718096;
+}
+
+.starRatingStar.interactive:hover .star.filled {
+  color: #ffed4e;
+  transform: scale(1.1);
+}
+
+/* Size variants */
+.starRating.small .star {
+  font-size: 0.875rem;
+}
+
+.starRating.medium .star {
+  font-size: 1.125rem;
+}
+
+.starRating.large .star {
+  font-size: 1.5rem;
+}
+
+.starRating.xlarge .star {
+  font-size: 2rem;
+}
+
+/* Theme adjustments */
+[data-theme="light"] .starRatingStar .star.empty {
+  color: #cbd5e0;
+  opacity: 0.8;
+}
+
+[data-theme="light"] .starRatingStar.interactive:hover .star.empty {
+  color: #a0aec0;
+}
+
+[data-theme="light"] .starRatingValue {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .starRatingCount {
+  color: var(--text-secondary);
+}
+
+/* Animation for rating changes */
+@keyframes starPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.starRatingStar .star.rating-changed {
+  animation: starPulse 0.3s ease;
+}
+
+/* Disabled state */
+.starRatingStar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.starRatingStar:disabled .star {
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .starRating {
+    gap: 6px;
+  }
+
+  .starRatingStars {
+    gap: 1px;
+  }
+
+  .starRatingValue {
+    font-size: 0.8rem;
+  }
+
+  .starRatingCount {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .starRating {
+    gap: 4px;
+  }
+
+  .starRatingValue {
+    font-size: 0.75rem;
+  }
+
+  .starRatingCount {
+    font-size: 0.7rem;
+  }
+}

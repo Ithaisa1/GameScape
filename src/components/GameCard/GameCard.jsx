@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useGameContext } from '../hooks/useGameContext';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useNotifications } from '../context/NotificationProvider';
-import StarRating from './StarRating';
-import '../styles/GameCard.css';
+import { useGameContext } from '../../hooks/useGameContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useNotifications } from '../../context/NotificationProvider';
+import StarRating from '../StarRating/StarRating';
+import styles from './GameCard.module.css';
 
 export default function GameCard({ game }) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useGameContext();
@@ -55,43 +55,43 @@ export default function GameCard({ game }) {
   const userRating = getUserRating();
 
   return (
-    <Link to={`/game/${game.id}`} className="game-card">
-      <div className="game-card__image">
+    <Link to={`/game/${game.id}`} className={styles.gameCard}>
+      <div className={styles.image}>
         <img
           src={imageUrl}
           alt={game.name}
           loading="lazy"
         />
       </div>
-      <div className="game-card__content">
-        <h3 className="game-card__title">{game.name}</h3>
-        <div className="game-card__meta">
-          <div className="game-card__ratings">
-            <div className="game-card__rating-item">
-              <span className="game-card__rating-label">Críticas:</span>
+      <div className={styles.content}>
+        <h3 className={styles.title}>{game.name}</h3>
+        <div className={styles.meta}>
+          <div className={styles.ratings}>
+            <div className={styles.ratingItem}>
+              <span className={styles.ratingLabel}>Críticas:</span>
               <StarRating rating={parseFloat(rating) || 0} readonly={true} size="small" showValue={false} />
-              <span className="game-card__rating-value">{rating}</span>
+              <span className={styles.ratingValue}>{rating}</span>
             </div>
             {userRating && (
-              <div className="game-card__rating-item">
-                <span className="game-card__rating-label">Usuarios:</span>
+              <div className={styles.ratingItem}>
+                <span className={styles.ratingLabel}>Usuarios:</span>
                 <StarRating rating={parseFloat(userRating)} readonly={true} size="small" showValue={false} />
-                <span className="game-card__rating-value user">{userRating}</span>
+                <span className={`${styles.ratingValue} ${styles.user}`}>{userRating}</span>
               </div>
             )}
           </div>
-          <span className="game-card__released">{year}</span>
+          <span className={styles.released}>{year}</span>
         </div>
-        <div className="game-card__genres">
+        <div className={styles.genres}>
           {game.genres && game.genres.slice(0, 3).map((genre) => (
-            <span key={genre.id} className="game-card__genre">
+            <span key={genre.id} className={styles.genre}>
               {genre.name}
             </span>
           ))}
         </div>
       </div>
       <button
-        className={`game-card__favorite ${favorite ? 'active' : ''}`}
+        className={`${styles.favorite} ${favorite ? styles.active : ''}`}
         onClick={handleFavoriteClick}
       >
        {favorite ? '❤️' : '🤍'}

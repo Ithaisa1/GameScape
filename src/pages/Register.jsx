@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import '../styles/Login.css'; // Reutilizamos los mismos estilos
+// CSS eliminado - Register.jsx usa estilos inline o de componentes
  
 export default function Register() {
   const [formData, setFormData] = useState({

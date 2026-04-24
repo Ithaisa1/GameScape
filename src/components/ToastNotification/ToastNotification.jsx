@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../styles/ToastNotification.css';
+import styles from './ToastNotification.module.css';
 
 const ToastNotification = ({ notification, onClose }) => {
   useEffect(() => {
@@ -29,16 +29,16 @@ const ToastNotification = ({ notification, onClose }) => {
   };
 
   return (
-    <div className={`toast-notification toast-notification--${notification.type}`}>
-      <div className="toast-notification__content">
-        <span className="toast-notification__icon">
+    <div className={`${styles.toastNotification} ${styles[`toastNotification${notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}`]}`}>
+      <div className={styles.toastNotificationContent}>
+        <span className={styles.toastNotificationIcon}>
           {getIcon()}
         </span>
-        <span className="toast-notification__message">
+        <span className={styles.toastNotificationMessage}>
           {notification.message}
         </span>
         <button 
-          className="toast-notification__close"
+          className={styles.toastNotificationClose}
           onClick={handleClose}
           aria-label="Cerrar notificación"
         >

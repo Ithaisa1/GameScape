@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useGameContext } from '../hooks/useGameContext';
-import '../styles/SearchSuggestions.css';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useGameContext } from '../../hooks/useGameContext';
+import styles from './SearchSuggestions.module.css';
 
 export default function SearchSuggestions() {
   const { getSearchHistory, isAuthenticated } = useAuthContext();
@@ -71,11 +71,11 @@ export default function SearchSuggestions() {
   }
 
   return (
-    <div className="search-suggestions" ref={suggestionsRef}>
-      <div className="search-suggestions__header">
-        <span className="search-suggestions__title">Sugerencias basadas en tu historial</span>
+    <div className={styles.searchSuggestions} ref={suggestionsRef}>
+      <div className={styles.searchSuggestionsHeader}>
+        <span className={styles.searchSuggestionsTitle}>Sugerencias basadas en tu historial</span>
         <button 
-          className="search-suggestions__close"
+          className={styles.searchSuggestionsClose}
           onClick={handleClearSuggestions}
           title="Cerrar sugerencias"
         >
@@ -83,21 +83,21 @@ export default function SearchSuggestions() {
         </button>
       </div>
       
-      <div className="search-suggestions__list">
+      <div className={styles.searchSuggestionsList}>
         {suggestions.map((item) => (
           <div 
             key={item.id} 
-            className="search-suggestions__item"
+            className={styles.searchSuggestionsItem}
             onClick={() => handleSuggestionClick(item)}
           >
-            <div className="search-suggestions__content">
-              <span className="search-suggestions__query">{item.query}</span>
-              <span className="search-suggestions__timestamp">
+            <div className={styles.searchSuggestionsContent}>
+              <span className={styles.searchSuggestionsQuery}>{item.query}</span>
+              <span className={styles.searchSuggestionsTimestamp}>
                 {formatTimestamp(item.timestamp)}
               </span>
             </div>
-            <div className="search-suggestions__action">
-              <span className="search-suggestions__arrow">Buscar</span>
+            <div className={styles.searchSuggestionsAction}>
+              <span className={styles.searchSuggestionsArrow}>Buscar</span>
             </div>
           </div>
         ))}

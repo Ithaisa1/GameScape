@@ -1,0 +1,275 @@
+/* Estilos para SearchHistory */
+.searchHistory {
+  background: rgba(34, 39, 52, 0.95);
+  border: 1px solid rgba(91, 140, 255, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.searchHistoryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(91, 140, 255, 0.2);
+}
+
+.searchHistoryHeader h3 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #5B8CFF, #A78BFA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.searchHistoryActions {
+  display: flex;
+  gap: 12px;
+}
+
+.searchHistoryClearBtn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.searchHistoryClearBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: translateY(-1px);
+}
+
+.searchHistoryEmpty {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.searchHistoryEmpty h3 {
+  color: #8892b0;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.searchHistoryEmpty p {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.searchHistoryList {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.searchHistoryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid rgba(91, 140, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.searchHistoryItem:hover {
+  background: rgba(91, 140, 255, 0.05);
+  transform: translateY(-1px);
+}
+
+.searchHistoryQuery {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.searchHistoryText {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.searchHistorySearchBtn {
+  background: rgba(91, 140, 255, 0.1);
+  color: #5B8CFF;
+  border: 1px solid rgba(91, 140, 255, 0.3);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.searchHistorySearchBtn:hover {
+  background: rgba(91, 140, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.searchHistoryTimestamp {
+  color: #8892b0;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.searchHistoryConfirmModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.searchHistoryConfirmContent {
+  background: rgba(34, 39, 52, 0.95);
+  border: 1px solid rgba(91, 140, 255, 0.2);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.searchHistoryConfirmContent h4 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.searchHistoryConfirmContent p {
+  color: #8892b0;
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.searchHistoryConfirmButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.searchHistoryCancelBtn {
+  background: rgba(91, 140, 255, 0.1);
+  color: #5B8CFF;
+  border: 1px solid rgba(91, 140, 255, 0.3);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.searchHistoryCancelBtn:hover {
+  background: rgba(91, 140, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.searchHistoryConfirmBtn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.searchHistoryConfirmBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Scrollbar personalizado */
+.searchHistoryList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.searchHistoryList::-webkit-scrollbar-track {
+  background: rgba(91, 140, 255, 0.1);
+  border-radius: 3px;
+}
+
+.searchHistoryList::-webkit-scrollbar-thumb {
+  background: rgba(91, 140, 255, 0.3);
+  border-radius: 3px;
+}
+
+.searchHistoryList::-webkit-scrollbar-thumb:hover {
+  background: rgba(91, 140, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .searchHistory {
+    margin: 16px 0;
+    padding: 20px 16px;
+  }
+  
+  .searchHistoryHeader {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .searchHistoryActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .searchHistoryItem {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .searchHistoryQuery {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .searchHistoryTimestamp {
+    text-align: left;
+    margin-top: 4px;
+  }
+  
+  .searchHistoryConfirmContent {
+    margin: 16px;
+    padding: 24px 20px;
+  }
+  
+  .searchHistoryConfirmButtons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .searchHistoryConfirmButtons button {
+    width: 100%;
+  }
+}

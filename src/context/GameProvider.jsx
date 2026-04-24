@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext } from 'react';
+import { useState, useEffect, useContext, createContext, useMemo } from 'react';
 import { AuthContext } from './AuthContext';
 import { getGames, searchGames, getGamesByGenre, searchGamesWithGenre, getGameById, getGameStores } from '../services/api';
 import { useNotifications } from './NotificationProvider';
@@ -60,6 +60,89 @@ export default function GameProvider({ children }) {
   // Get current favorites (from user or local state)
   const favorites = user?.favorites || [];
 
+  // Memoized filtered games for performance optimization
+  const filteredGames = useMemo(() => {
+    let filtered = games;
+
+    // Filter by year range
+    if (yearRange.min || yearRange.max) {
+      filtered = filtered.filter(game => {
+        if (!game.released) return true;
+        const gameYear = new Date(game.released).getFullYear();
+        
+        if (yearRange.min && gameYear < parseInt(yearRange.min)) return false;
+        if (yearRange.max && gameYear > parseInt(yearRange.max)) return false;
+        
+        return true;
+      });
+    }
+
+    // Filter by platforms
+    if (selectedPlatforms.length > 0) {
+      filtered = filtered.filter(game => {
+        if (!game.platforms || game.platforms.length === 0) return false;
+        
+        return selectedPlatforms.some(selectedPlatform => {
+          return game.platforms.some(platform => {
+            const platformName = platform.platform.name.toLowerCase();
+            
+            switch(selectedPlatform) {
+              case 'pc':
+                return platformName.includes('pc') || platformName.includes('windows');
+              case 'playstation':
+                return platformName.includes('playstation') || platformName.includes('ps');
+              case 'xbox':
+                return platformName.includes('xbox');
+              case 'nintendo':
+                return platformName.includes('nintendo') || platformName.includes('switch');
+              case 'mobile':
+                return platformName.includes('android') || platformName.includes('ios') || platformName.includes('mobile');
+              default:
+                return false;
+            }
+          });
+        });
+      });
+    }
+
+    // Apply sorting
+    if (sortBy || ratingSort) {
+      filtered = [...filtered].sort((a, b) => {
+        // First apply rating sort if specified
+        if (ratingSort) {
+          const ratingA = a.rating || 0;
+          const ratingB = b.rating || 0;
+          return ratingSort === 'desc' ? ratingB - ratingA : ratingA - ratingB;
+        }
+        
+        // Then apply sortBy
+        switch(sortBy) {
+          case 'rating':
+            const ratingA = a.rating || 0;
+            const ratingB = b.rating || 0;
+            return ratingB - ratingA;
+          case 'released':
+            const dateA = a.released ? new Date(a.released) : new Date(0);
+            const dateB = b.released ? new Date(b.released) : new Date(0);
+            return dateB - dateA;
+          case 'name':
+            return a.name.localeCompare(b.name);
+          case 'popularity':
+            // Use rating as popularity proxy (could be enhanced with actual popularity metrics)
+            const popA = a.rating || 0;
+            const popB = b.rating || 0;
+            return popB - popA;
+          case 'relevance':
+          default:
+            // Keep original order for relevance
+            return 0;
+        }
+      });
+    }
+
+    return filtered;
+  }, [games, yearRange, selectedPlatforms, sortBy, ratingSort]);
+
   // Fetch games based on filters
   const fetchGames = async () => {
     setLoading(true);
@@ -84,86 +167,8 @@ export default function GameProvider({ children }) {
         data = await getGames(currentPage);
       }
 
-      // Apply advanced filters locally
-      let filteredGames = data.results;
-
-      // Filter by year range
-      if (yearRange.min || yearRange.max) {
-        filteredGames = filteredGames.filter(game => {
-          if (!game.released) return true;
-          const gameYear = new Date(game.released).getFullYear();
-          
-          if (yearRange.min && gameYear < parseInt(yearRange.min)) return false;
-          if (yearRange.max && gameYear > parseInt(yearRange.max)) return false;
-          
-          return true;
-        });
-      }
-
-      // Filter by platforms
-      if (selectedPlatforms.length > 0) {
-        filteredGames = filteredGames.filter(game => {
-          if (!game.platforms || game.platforms.length === 0) return false;
-          
-          return selectedPlatforms.some(selectedPlatform => {
-            return game.platforms.some(platform => {
-              const platformName = platform.platform.name.toLowerCase();
-              
-              switch(selectedPlatform) {
-                case 'pc':
-                  return platformName.includes('pc') || platformName.includes('windows');
-                case 'playstation':
-                  return platformName.includes('playstation') || platformName.includes('ps');
-                case 'xbox':
-                  return platformName.includes('xbox');
-                case 'nintendo':
-                  return platformName.includes('nintendo') || platformName.includes('switch');
-                case 'mobile':
-                  return platformName.includes('android') || platformName.includes('ios') || platformName.includes('mobile');
-                default:
-                  return false;
-              }
-            });
-          });
-        });
-      }
-
-      // Apply sorting
-      if (sortBy || ratingSort) {
-        filteredGames = [...filteredGames].sort((a, b) => {
-          // First apply rating sort if specified
-          if (ratingSort) {
-            const ratingA = a.rating || 0;
-            const ratingB = b.rating || 0;
-            return ratingSort === 'desc' ? ratingB - ratingA : ratingA - ratingB;
-          }
-          
-          // Then apply sortBy
-          switch(sortBy) {
-            case 'rating':
-              const ratingA = a.rating || 0;
-              const ratingB = b.rating || 0;
-              return ratingB - ratingA;
-            case 'released':
-              const dateA = a.released ? new Date(a.released) : new Date(0);
-              const dateB = b.released ? new Date(b.released) : new Date(0);
-              return dateB - dateA;
-            case 'name':
-              return a.name.localeCompare(b.name);
-            case 'popularity':
-              // Use rating as popularity proxy (could be enhanced with actual popularity metrics)
-              const popA = a.rating || 0;
-              const popB = b.rating || 0;
-              return popB - popA;
-            case 'relevance':
-            default:
-              // Keep original order for relevance
-              return 0;
-          }
-        });
-      }
-
-      setGames(filteredGames);
+      // Set games from API - filtering will be handled by useMemo at component level
+      setGames(data.results);
       // Usar count real de API (44,000+ juegos) con fallback mínimo
       const apiCount = data.count || 0;
       const realCount = Math.max(apiCount, 1000); // Mínimo 1000 para asegurar paginación
@@ -260,6 +265,7 @@ export default function GameProvider({ children }) {
         setSelectedPlatforms,
         // API related
         games,
+        filteredGames,
         loading,
         error,
         totalCount,

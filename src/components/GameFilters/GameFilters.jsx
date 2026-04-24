@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useGameContext } from '../hooks/useGameContext';
-import '../styles/GameFilters.css';
+import { useGameContext } from '../../hooks/useGameContext';
+import styles from './GameFilters.module.css';
 
 export default function GameFilters() {
   const { 
@@ -62,13 +62,13 @@ export default function GameFilters() {
   };
 
   return (
-    <div className="game-filters">
-      <div className="game-filters__basic">
-        <div className="game-filters__item">
+    <div className={styles.gameFilters}>
+      <div className={styles.gameFiltersBasic}>
+        <div className={styles.gameFiltersItem}>
           <label htmlFor="genre-select">Género:</label>
           <select
             id="genre-select"
-            className="game-filters__select"
+            className={styles.gameFiltersSelect}
             value={selectedGenre}
             onChange={handleGenreChange}
           >
@@ -84,11 +84,11 @@ export default function GameFilters() {
           </select>
         </div>
 
-        <div className="game-filters__item">
+        <div className={styles.gameFiltersItem}>
           <label htmlFor="rating-sort">Valoración:</label>
           <select
             id="rating-sort"
-            className="game-filters__select"
+            className={styles.gameFiltersSelect}
             value={ratingSort}
             onChange={handleRatingSortChange}
           >
@@ -98,11 +98,11 @@ export default function GameFilters() {
           </select>
         </div>
 
-        <div className="game-filters__item">
+        <div className={styles.gameFiltersItem}>
           <label htmlFor="sort-by">Ordenar por:</label>
           <select
             id="sort-by"
-            className="game-filters__select"
+            className={styles.gameFiltersSelect}
             value={sortBy}
             onChange={handleSortByChange}
           >
@@ -114,9 +114,9 @@ export default function GameFilters() {
           </select>
         </div>
 
-        <div className="game-filters__actions">
+        <div className={styles.gameFiltersActions}>
           <button 
-            className="game-filters__toggle"
+            className={styles.gameFiltersToggle}
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
             {showAdvanced ? '◀ Menos filtros' : '▶ Más filtros'}
@@ -125,11 +125,11 @@ export default function GameFilters() {
       </div>
 
       {showAdvanced && (
-        <div className="game-filters__advanced">
-          <div className="game-filters__section">
-            <h4 className="game-filters__section-title">📅 Año de lanzamiento</h4>
-            <div className="game-filters__range">
-              <div className="game-filters__range-item">
+        <div className={styles.gameFiltersAdvanced}>
+          <div className={styles.gameFiltersSection}>
+            <h4 className={styles.gameFiltersSectionTitle}>📅 Año de lanzamiento</h4>
+            <div className={styles.gameFiltersRange}>
+              <div className={styles.gameFiltersRangeItem}>
                 <label>Desde:</label>
                 <input
                   type="number"
@@ -138,10 +138,10 @@ export default function GameFilters() {
                   max={new Date().getFullYear()}
                   value={yearRange.min}
                   onChange={(e) => handleYearRangeChange('min', e.target.value)}
-                  className="game-filters__input"
+                  className={styles.gameFiltersInput}
                 />
               </div>
-              <div className="game-filters__range-item">
+              <div className={styles.gameFiltersRangeItem}>
                 <label>Hasta:</label>
                 <input
                   type="number"
@@ -150,15 +150,15 @@ export default function GameFilters() {
                   max={new Date().getFullYear()}
                   value={yearRange.max}
                   onChange={(e) => handleYearRangeChange('max', e.target.value)}
-                  className="game-filters__input"
+                  className={styles.gameFiltersInput}
                 />
               </div>
             </div>
           </div>
 
-          <div className="game-filters__section">
-            <h4 className="game-filters__section-title">🎮 Plataformas</h4>
-            <div className="game-filters__platforms">
+          <div className={styles.gameFiltersSection}>
+            <h4 className={styles.gameFiltersSectionTitle}>🎮 Plataformas</h4>
+            <div className={styles.gameFiltersPlatforms}>
               {[
                 { id: 'pc', name: 'PC' },
                 { id: 'playstation', name: 'PlayStation' },
@@ -166,7 +166,7 @@ export default function GameFilters() {
                 { id: 'nintendo', name: 'Nintendo' },
                 { id: 'mobile', name: 'Mobile' }
               ].map(platform => (
-                <label key={platform.id} className="game-filters__checkbox">
+                <label key={platform.id} className={styles.gameFiltersCheckbox}>
                   <input
                     type="checkbox"
                     checked={selectedPlatforms.includes(platform.id)}
@@ -177,15 +177,15 @@ export default function GameFilters() {
               ))}
             </div>
             
-            <div className="game-filters__advanced-actions">
+            <div className={styles.gameFiltersAdvancedActions}>
               <button 
-                className="game-filters__apply"
+                className={styles.gameFiltersApply}
                 onClick={applyFilters}
               >
                 🔍 Aplicar Filtros
               </button>
               <button 
-                className="game-filters__clear"
+                className={styles.gameFiltersClear}
                 onClick={clearFilters}
               >
                 🔄 Limpiar

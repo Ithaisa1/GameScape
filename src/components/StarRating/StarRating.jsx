@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../styles/StarRating.css';
+import styles from './StarRating.module.css';
 
 export default function StarRating({ 
   rating = 0, 
@@ -43,7 +43,7 @@ export default function StarRating({
         <button
           key={i}
           type="button"
-          className={`star-rating__star ${size} ${readonly ? 'readonly' : 'interactive'}`}
+          className={`${styles.starRatingStar} ${styles[size]} ${readonly ? styles.readonly : styles.interactive}`}
           onClick={() => handleStarClick(i)}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
@@ -51,7 +51,7 @@ export default function StarRating({
           aria-label={`Calificar ${i} de 5 estrellas`}
           aria-current={i === currentRating ? 'true' : 'false'}
         >
-          <span className={`star ${isFilled ? 'filled' : isHalfFilled ? 'half' : 'empty'}`}>
+          <span className={`${styles.star} ${isFilled ? styles.filled : isHalfFilled ? styles.half : styles.empty}`}>
             {isFilled ? '⭐' : isHalfFilled ? '⭐' : '☆'}
           </span>
         </button>
@@ -62,12 +62,12 @@ export default function StarRating({
   };
 
   return (
-    <div className={`star-rating ${size}`}>
-      <div className="star-rating__stars">
+    <div className={`${styles.starRating} ${styles[size]}`}>
+      <div className={styles.starRatingStars}>
         {renderStars()}
       </div>
       {showValue && (
-        <span className="star-rating__value">
+        <span className={styles.starRatingValue}>
           {currentRating > 0 ? `${currentRating}/5` : 'Sin calificar'}
         </span>
       )}
