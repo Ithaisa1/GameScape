@@ -101,8 +101,9 @@ src/
 ├── hooks/ # Lógica reutilizable
 ├── services/ # API
 ├── styles/ # CSS
-├── router/ # Rutas
 └── test/ # Testing
+
+- React Router DOM para navegación entre páginas
 ```
 
 
