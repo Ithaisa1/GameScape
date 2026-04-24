@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useGameContext } from '../../hooks/useGameContext';
 import styles from './GameFilters.module.css';
 

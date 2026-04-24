@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGameContext } from '../../hooks/useGameContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { searchSuggestions } from '../../services/api';

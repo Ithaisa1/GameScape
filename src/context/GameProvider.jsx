@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext, useMemo } from 'react';
+import React, { useState, useEffect, useContext, createContext, useMemo } from 'react';
 import { AuthContext } from './AuthContext';
 import { getGames, searchGames, getGamesByGenre, searchGamesWithGenre, getGameById, getGameStores } from '../services/api';
 import { useNotifications } from './NotificationProvider';

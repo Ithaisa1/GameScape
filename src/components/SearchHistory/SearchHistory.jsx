@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import styles from './SearchHistory.module.css';
 

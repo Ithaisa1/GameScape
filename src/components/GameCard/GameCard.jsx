@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGameContext } from '../../hooks/useGameContext';
 import { useAuthContext } from '../../hooks/useAuthContext';

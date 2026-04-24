@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useGameContext } from '../../hooks/useGameContext';
 import styles from './SearchSuggestions.module.css';

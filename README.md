@@ -112,6 +112,46 @@ Buscador de videojuegos que permite a los usuarios encontrar títulos de forma r
 - **Total**: 11 horas 50 minutos
 - **Tareas completadas**: Sistema de reseñas completo, configuración avanzada, búsqueda avanzada, filtros mejorados, correcciones técnicas
 
+### Día 5 (27/04/2026)
+- **Inicio**: 10:00 AM
+- **Fin**: 6:20 PM
+- **Total**: 8 horas 20 minutos
+- **Tareas completadas**: Auditoría completa de archivos, eliminación de 18 archivos obsoletos, recreación de CSS necesarios, limpieza de estructura del proyecto
+
+## 🐛 Errores y Soluciones (Día 5)
+
+### Problemas Técnicos Encontrados:
+1. **Archivos CSS obsoletos en carpeta `styles/`**
+   - **Problema**: 16 archivos CSS que ya no se usaban porque los componentes migraron a CSS Modules
+   - **Solución**: Auditoría sistemática y eliminación de archivos obsoletos
+   - **Impacto**: Proyecto más limpio, ~68 KB liberados
+
+2. **Archivos temporales y duplicados**
+   - **Problema**: App.css vacío, global.css no importado, temp_navbar_styles.css, Settings_clean.jsx duplicado, router/index.jsx no usado
+   - **Solución**: Eliminación de 18 archivos obsoletos en total
+   - **Impacto**: Estructura del proyecto limpia y organizada
+
+3. **Inconsistencia en estrategia CSS**
+   - **Problema**: Componentes usan CSS Modules, páginas usaban CSS normal en styles/
+   - **Solución**: Recreación de archivos CSS necesarios con estilos consistentes
+   - **Impacto**: Arquitectura CSS más mantenible
+
+### Archivos CSS Recreados:
+- **Favorites.css**: Estilos responsive para página de favoritos (4→2→1 columnas)
+- **Login.css**: Estilos con soporte de tema claro/oscuro
+- **GameDetail.css**: Layout responsive con media queries (móvil/tablet/desktop)
+- **Pagination.css**: Estilos Mobile First
+- **ReviewForm.css**: Formulario de reseñas con animaciones
+- **ReviewList.css**: Lista de reseñas responsive
+- **StarRating.css**: Sistema de estrellas interactivo
+- **StoreButtons.css**: Botones de tiendas con hover effects
+- **GameFilters.css**: Filtros responsive sin scroll horizontal
+
+### Resultado Final:
+- **Archivos eliminados**: 18
+- **Espacio liberado**: ~68 KB
+- **Estado**: Proyecto limpio y optimizado
+
 ## 🐛 Errores y Soluciones (Día 4)
 
 ### Problemas Técnicos Encontrados:
@@ -156,12 +196,12 @@ Buscador de videojuegos que permite a los usuarios encontrar títulos de forma r
 - **🚀 Deploy producción**: Configuración de hosting y dominio
 - **📊 Análisis final**: Métricas de rendimiento y用户体验
 
-## 📈 Estadísticas del Proyecto (Actualizado Día 4)
-- **Tiempo total de desarrollo**: 32.5 horas
-- **Días de desarrollo**: 4 días
+## 📈 Estadísticas del Proyecto (Actualizado Día 5)
+- **Tiempo total de desarrollo**: 40 horas 50 minutos
+- **Días de desarrollo**: 5 días
 - **Características implementadas**: 40+ funcionalidades
 - **Sistemas completos**: Usuarios, búsqueda, reseñas, configuración, UI/UX, temas
-- **Estado actual**: Sistema completo funcional y optimizado
+- **Estado actual**: Sistema completo funcional, optimizado y limpio
 
 ## 🚀 Estado del Proyecto
 **GameScape está completo y listo para producción con todas las características solicitadas implementadas y funcionando correctamente.**

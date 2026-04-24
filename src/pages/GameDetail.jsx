@@ -62,6 +62,7 @@ export default function GameDetail() {
               muted
               loop
               poster={gameDetail.background_image}
+              data-testid="game-video"
             >
               <source src={gameDetail.clip.clips[0]} type="video/mp4" />
             </video>
