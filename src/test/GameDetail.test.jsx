@@ -1,3 +1,10 @@
+/**
+ * @file GameDetail.test.jsx
+ * @description Tests unitarios para la página GameDetail. Verifica el renderizado,
+ *              carga de datos, manejo de errores y funcionalidad de favoritos.
+ * @module Test
+ */
+
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';

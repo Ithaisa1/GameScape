@@ -2,6 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 import { useNotifications } from './NotificationProvider';
 
+/**
+ * @component AuthProvider
+ * @description Proveedor de contexto para la autenticación de usuarios. Gestiona el estado de autenticación,
+ *              login, registro, actualización de perfil, historial de búsquedas y eliminación de cuenta.
+ *              Utiliza localStorage para persistir los datos de usuarios y sesiones.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Componentes hijos que tendrán acceso al contexto de autenticación
+ *
+ * @returns {JSX.Element} Provider de AuthContext con el estado y funciones de autenticación
+ *
+ * @context
+ * - user: Datos del usuario autenticado o null
+ * - login: Función para iniciar sesión
+ * - register: Función para registrar nuevo usuario
+ * - updateProfile: Función para actualizar datos del perfil
+ * - deleteAccount: Función para eliminar cuenta
+ * - addToSearchHistory: Función para agregar búsqueda al historial
+ * - getSearchHistory: Función para obtener historial de búsquedas
+ * - clearSearchHistory: Función para limpiar historial de búsquedas
+ * - logout: Función para cerrar sesión
+ * - isAuthenticated: Boolean que indica si hay usuario autenticado
+ * - loading: Boolean que indica si se está cargando la sesión
+ */
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +49,13 @@ export default function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  // Login con verificación de usuario existente
+  /**
+   * @function login
+   * @description Inicia sesión de un usuario verificando email y contraseña contra localStorage
+   * @param {string} email - Email del usuario
+   * @param {string} password - Contraseña del usuario
+   * @returns {Promise<{success: boolean, error?: string}>} Objeto con resultado del login
+   */
   const login = async (email, password) => {
     try {
       // Buscar usuario en localStorage
@@ -48,7 +78,17 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // Registro de nuevo usuario
+  /**
+   * @function register
+   * @description Registra un nuevo usuario verificando que email y nick no existan previamente
+   * @param {Object} userData - Datos del nuevo usuario
+   * @param {string} userData.name - Nombre del usuario
+   * @param {string} userData.nick - Nickname único del usuario
+   * @param {string} userData.email - Email del usuario
+   * @param {string} userData.password - Contraseña del usuario
+   * @param {string} [userData.photoProfile] - URL de foto de perfil (opcional)
+   * @returns {Promise<{success: boolean, error?: string}>} Objeto con resultado del registro
+   */
   const register = async (userData) => {
     try {
       const users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -94,7 +134,12 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // Actualizar perfil
+  /**
+   * @function updateProfile
+   * @description Actualiza los datos del perfil del usuario autenticado
+   * @param {Object} updates - Campos a actualizar del perfil
+   * @returns {Promise<{success: boolean, error?: string}>} Objeto con resultado de la actualización
+   */
   const updateProfile = async (updates) => {
     try {
       if (!user) return { success: false, error: 'Usuario no autenticado' };
@@ -120,7 +165,11 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // Agregar búsqueda al historial
+  /**
+   * @function addToSearchHistory
+   * @description Agrega una búsqueda al historial del usuario, evitando duplicados y manteniendo máximo 20 búsquedas
+   * @param {string} searchQuery - Texto de la búsqueda a agregar
+   */
   const addToSearchHistory = (searchQuery) => {
     if (!user || !searchQuery || searchQuery.trim() === '') return;
     
@@ -158,13 +207,20 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // Obtener historial de búsquedas
+  /**
+   * @function getSearchHistory
+   * @description Retorna el historial de búsquedas del usuario actual
+   * @returns {Array<{query: string, timestamp: string, id: string}>} Array de búsquedas ordenadas por fecha (más reciente primero)
+   */
   const getSearchHistory = () => {
     if (!user) return [];
     return user.searchHistory || [];
   };
 
-  // Limpiar historial de búsquedas
+  /**
+   * @function clearSearchHistory
+   * @description Elimina todo el historial de búsquedas del usuario actual
+   */
   const clearSearchHistory = () => {
     if (!user) return;
     
@@ -188,7 +244,11 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // Eliminar cuenta
+  /**
+   * @function deleteAccount
+   * @description Elimina permanentemente la cuenta del usuario y todos sus datos
+   * @returns {Promise<{success: boolean, error?: string}>} Objeto con resultado de la eliminación
+   */
   const deleteAccount = async () => {
     try {
       if (!user) return { success: false, error: 'Usuario no autenticado' };
@@ -209,7 +269,10 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // Logout
+  /**
+   * @function logout
+   * @description Cierra la sesión del usuario actual y limpia localStorage
+   */
   const logout = () => {
     setUser(null);
     localStorage.removeItem('token');

@@ -1,3 +1,10 @@
+/**
+ * @file SearchBar.jsx
+ * @description Componente de barra de búsqueda con autocompletado y sugerencias de la API.
+ *              Permite buscar juegos por nombre con debounce para optimizar las llamadas a la API.
+ * @module Components
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useGameContext } from '../../hooks/useGameContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -5,25 +12,61 @@ import { searchSuggestions } from '../../services/api';
 import SearchSuggestions from '../SearchSuggestions/SearchSuggestions';
 import styles from './SearchBar.module.css';
 
+/**
+ * @component SearchBar
+ * @description Barra de búsqueda con autocompletado. Muestra sugerencias de la API mientras el usuario escribe
+ *              y permite limpiar la búsqueda con un botón. Utiliza debounce para evitar llamadas excesivas a la API.
+ *
+ * @returns {JSX.Element} Barra de búsqueda con input y sugerencias
+ *
+ * Estado interno:
+ * - localQuery: Valor del input local (se sincroniza con searchQuery al enviar)
+ * - suggestions: Array de sugerencias de la API
+ * - showSuggestions: Boolean para mostrar/ocultar el dropdown de sugerencias
+ * - searchRef: Ref del contenedor para detectar clics fuera
+ *
+ * Efectos secundarios:
+ * - useEffect con debounce: Obtiene sugerencias de la API cuando localQuery cambia (con 300ms de delay)
+ * - useEffect con clickOutside: Cierra las sugerencias al hacer clic fuera del componente
+ */
 export default function SearchBar() {
   const { searchQuery, setSearchQuery } = useGameContext();
   const { user } = useAuthContext();
+  // Estado local del input para controlar el texto mientras el usuario escribe
   const [localQuery, setLocalQuery] = useState(searchQuery);
+  // Sugerencias obtenidas de la API
   const [suggestions, setSuggestions] = useState([]);
+  // Control de visibilidad del dropdown de sugerencias
   const [showSuggestions, setShowSuggestions] = useState(false);
+  // Ref para detectar clics fuera del componente
   const searchRef = useRef(null);
 
+  /**
+   * @function handleSubmit
+   * @description Maneja el envío del formulario de búsqueda. Actualiza searchQuery en el contexto
+   *              y cierra las sugerencias.
+   * @param {Event} e - Evento del formulario
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchQuery(localQuery);
     setShowSuggestions(false);
   };
 
+  /**
+   * @function handleChange
+   * @description Actualiza el estado local del input cuando el usuario escribe
+   * @param {Event} e - Evento de cambio del input
+   */
   const handleChange = (e) => {
     const value = e.target.value;
     setLocalQuery(value);
   };
 
+  /**
+   * @function handleClear
+   * @description Limpia el input y resetea todos los estados relacionados con la búsqueda
+   */
   const handleClear = () => {
     setLocalQuery('');
     setSearchQuery('');
@@ -31,6 +74,11 @@ export default function SearchBar() {
     setShowSuggestions(false);
   };
 
+  /**
+   * @function handleSuggestionClick
+   * @description Selecciona una sugerencia y ejecuta la búsqueda con ese texto
+   * @param {string} gameName - Nombre del juego seleccionado
+   */
   const handleSuggestionClick = (gameName) => {
     setLocalQuery(gameName);
     setSearchQuery(gameName);
@@ -39,14 +87,20 @@ export default function SearchBar() {
 
   const showClearButton = localQuery.length > 0;
 
-  // Debounce for suggestions
+  // Efecto con debounce para obtener sugerencias de la API
+  // Espera 300ms después de que el usuario deje de escribir antes de hacer la llamada
   useEffect(() => {
     let timeoutId;
 
+    /**
+     * @function fetchSuggestions
+     * @description Obtiene sugerencias de la API RAWG basadas en la consulta actual
+     */
     const fetchSuggestions = async () => {
       if (localQuery.length >= 2) {
         try {
           const data = await searchSuggestions(localQuery);
+          // La API devuelve un array de juegos en results
           setSuggestions(data.results || []);
           setShowSuggestions(true);
         } catch (err) {

@@ -1,3 +1,10 @@
+/**
+ * @file Pagination.css
+ * @description Estilos para el componente de paginación. Incluye botones
+ *              de navegación y números de página con estado activo.
+ * @module Styles
+ */
+
 .pagination {
   display: flex;
   justify-content: center;

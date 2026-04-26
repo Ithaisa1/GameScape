@@ -7,6 +7,21 @@ import StarRating from '../components/StarRating/StarRating';
 import ReviewList from '../components/ReviewList/ReviewList';
 import '../styles/GameDetail.css';
 
+/**
+ * @component GameDetail
+ * @description Página de detalle de un juego específico. Muestra información completa del juego,
+ *              incluyendo descripción, plataformas, fechas de lanzamiento, tiendas donde está disponible,
+ *              sistema de valoración con estrellas y lista de reseñas. Permite agregar/eliminar de favoritos.
+ *
+ * Estado interno:
+ * - Utiliza useGameContext para obtener detalles del juego y funciones de favoritos
+ * - Utiliza useAuthContext para verificar autenticación
+ *
+ * Efectos secundarios:
+ * - useEffect: Obtiene los detalles del juego cuando cambia el ID en la URL
+ *
+ * @returns {JSX.Element} Página de detalle con información completa del juego
+ */
 export default function GameDetail() {
   const { id } = useParams();
 

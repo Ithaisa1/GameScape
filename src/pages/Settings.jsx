@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useTheme } from '../context/ThemeProvider';
 import { useNavigate } from 'react-router-dom';
-// CSS eliminado - Settings.jsx usa estilos inline o de componentes
 
 export default function Settings() {
   const { user, logout } = useAuthContext();
@@ -187,29 +186,80 @@ export default function Settings() {
   };
 
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      background: bgColors[isDarkTheme ? 'dark' : 'light'], 
-      padding: '2rem',
-      transition: 'all 0.3s ease'
-    }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <div style={{ 
-          background: cardColors[isDarkTheme ? 'dark' : 'light'], 
-          borderRadius: '20px', 
-          padding: '3rem', 
-          boxShadow: isDarkTheme 
-            ? '0 20px 40px rgba(0, 0, 0, 0.5)' 
-            : '0 20px 40px rgba(0, 0, 0, 0.1)', 
+    <>
+      <style>{`
+        @media screen and (max-width: 375px) {
+          body {
+            overflow-x: hidden;
+          }
+          .settings-mobile-container {
+            padding: 16px !important;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+          }
+          .settings-mobile-card {
+            padding: 16px !important;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+          }
+          .settings-mobile-title {
+            white-space: normal !important;
+            overflow-wrap: break-word !important;
+            word-break: break-word !important;
+            font-size: clamp(1.5rem, 5vw, 2rem) !important;
+          }
+          .settings-mobile-section {
+            padding: 16px !important;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+          }
+          .settings-mobile-theme-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+          }
+          .settings-mobile-theme-button {
+            width: 100% !important;
+          }
+          .settings-mobile-time-inputs {
+            flex-direction: column !important;
+            gap: 12px !important;
+          }
+          .settings-mobile-buttons {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          .settings-mobile-button {
+            width: 100% !important;
+          }
+        }
+      `}</style>
+      <div style={{
+        minHeight: '100vh',
+        background: bgColors[isDarkTheme ? 'dark' : 'light'],
+        padding: '2rem',
+        transition: 'all 0.3s ease'
+      }}>
+      <div className="settings-container settings-mobile-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div className="settings-card settings-mobile-card" style={{
+          background: cardColors[isDarkTheme ? 'dark' : 'light'],
+          borderRadius: '20px',
+          padding: '3rem',
+          boxShadow: isDarkTheme
+            ? '0 20px 40px rgba(0, 0, 0, 0.5)'
+            : '0 20px 40px rgba(0, 0, 0, 0.1)',
           backdropFilter: 'blur(10px)',
           border: isDarkTheme ? '1px solid #2A2F3A' : '1px solid #DEE2E6',
           transition: 'all 0.3s ease'
         }}>
-          <h1 style={{ 
-            fontSize: '2.5rem', 
-            fontWeight: 'bold', 
-            color: textColors[isDarkTheme ? 'dark' : 'light'], 
-            marginBottom: '1rem', 
+          <h1 className="settings-title settings-mobile-title" style={{
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            color: textColors[isDarkTheme ? 'dark' : 'light'],
+            marginBottom: '1rem',
             textAlign: 'center',
             background: `linear-gradient(45deg, ${primaryColors[isDarkTheme ? 'dark' : 'light']}, ${isDarkTheme ? '#A78BFA' : '#6366F1'})`,
             WebkitBackgroundClip: 'text',
@@ -239,12 +289,12 @@ export default function Settings() {
             border: '1px solid #cfc' 
           }}>{success}</div>}
           
-          <form style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }} onSubmit={(e) => { e.preventDefault(); handleSaveSettings(); }}>
-            
-            <div style={{ 
-              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'], 
-              borderRadius: '15px', 
-              padding: '2rem', 
+          <form className="settings-form" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }} onSubmit={(e) => { e.preventDefault(); handleSaveSettings(); }}>
+
+            <div className="settings-section settings-mobile-section" style={{
+              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'],
+              borderRadius: '15px',
+              padding: '2rem',
               border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}`,
               transition: 'all 0.3s ease'
             }}>
@@ -333,10 +383,10 @@ export default function Settings() {
               </div>
             </div>
 
-            <div style={{ 
-              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'], 
-              borderRadius: '15px', 
-              padding: '2rem', 
+            <div className="settings-section settings-mobile-section" style={{
+              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'],
+              borderRadius: '15px',
+              padding: '2rem',
               border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}`,
               transition: 'all 0.3s ease'
             }}>
@@ -410,10 +460,10 @@ export default function Settings() {
               </div>
             </div>
 
-            <div style={{ 
-              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'], 
-              borderRadius: '15px', 
-              padding: '2rem', 
+            <div className="settings-section settings-mobile-section" style={{
+              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'],
+              borderRadius: '15px',
+              padding: '2rem',
               border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}`,
               transition: 'all 0.3s ease'
             }}>
@@ -424,28 +474,29 @@ export default function Settings() {
                 marginBottom: '1.5rem' 
               }}>Opciones de Tema</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '1rem', 
-                  padding: '1rem', 
-                  background: isDarkTheme ? '#222734' : '#FFFFFF', 
-                  borderRadius: '10px', 
-                  border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}` 
+                <div className="theme-container settings-mobile-theme-row" style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  padding: '1rem',
+                  background: isDarkTheme ? '#222734' : '#FFFFFF',
+                  borderRadius: '10px',
+                  border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}`
                 }}>
                   <span style={{ color: textColors[isDarkTheme ? 'dark' : 'light'] }}>Tema actual: </span>
                   <strong style={{ color: textColors[isDarkTheme ? 'dark' : 'light'] }}>{theme === 'light' ? 'Claro' : 'Oscuro'}</strong>
                   <button
                     type="button"
-                    style={{ 
-                      background: `linear-gradient(135deg, ${primaryColors[isDarkTheme ? 'dark' : 'light']} 0%, ${isDarkTheme ? '#A78BFA' : '#6366F1'} 100%)`, 
-                      color: '#fff', 
-                      border: 'none', 
-                      padding: '0.5rem 1rem', 
-                      borderRadius: '8px', 
-                      fontSize: '0.9rem', 
-                      cursor: 'pointer', 
-                      transition: 'all 0.3s ease' 
+                    className="theme-toggle-button settings-mobile-theme-button"
+                    style={{
+                      background: `linear-gradient(135deg, ${primaryColors[isDarkTheme ? 'dark' : 'light']} 0%, ${isDarkTheme ? '#A78BFA' : '#6366F1'} 100%)`,
+                      color: '#fff',
+                      border: 'none',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
                     }}
                     onClick={toggleTheme}
                   >
@@ -470,13 +521,13 @@ export default function Settings() {
                 </label>
                 
                 {settings.theme.autoSwitch && (
-                  <div style={{ 
-                    display: 'flex', 
-                    gap: '1rem', 
-                    padding: '1rem', 
-                    background: isDarkTheme ? '#222734' : '#FFFFFF', 
-                    borderRadius: '10px', 
-                    border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}` 
+                  <div className="time-inputs settings-mobile-time-inputs" style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    padding: '1rem',
+                    background: isDarkTheme ? '#222734' : '#FFFFFF',
+                    borderRadius: '10px',
+                    border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}`
                   }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       <label style={{ color: textColors[isDarkTheme ? 'dark' : 'light'], fontSize: '0.9rem' }}>Desde:</label>
@@ -515,10 +566,10 @@ export default function Settings() {
               </div>
             </div>
 
-            <div style={{ 
-              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'], 
-              borderRadius: '15px', 
-              padding: '2rem', 
+            <div className="settings-section settings-mobile-section" style={{
+              background: sectionBgColors[isDarkTheme ? 'dark' : 'light'],
+              borderRadius: '15px',
+              padding: '2rem',
               border: `1px solid ${borderColors[isDarkTheme ? 'dark' : 'light']}`,
               transition: 'all 0.3s ease'
             }}>
@@ -577,40 +628,42 @@ export default function Settings() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button 
-                type="submit" 
-                style={{ 
-                  background: `linear-gradient(135deg, ${primaryColors[isDarkTheme ? 'dark' : 'light']} 0%, ${isDarkTheme ? '#A78BFA' : '#6366F1'} 100%)`, 
-                  color: '#fff', 
-                  border: 'none', 
-                  padding: '1rem 2rem', 
-                  borderRadius: '10px', 
-                  fontSize: '1.1rem', 
-                  fontWeight: '600', 
-                  cursor: 'pointer', 
-                  transition: 'all 0.3s ease', 
-                  boxShadow: isDarkTheme 
-                    ? '0 4px 15px rgba(91, 140, 255, 0.4)' 
-                    : '0 4px 15px rgba(0, 102, 204, 0.4)' 
+            <div className="action-buttons settings-mobile-buttons" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                type="submit"
+                className="action-button settings-mobile-button"
+                style={{
+                  background: `linear-gradient(135deg, ${primaryColors[isDarkTheme ? 'dark' : 'light']} 0%, ${isDarkTheme ? '#A78BFA' : '#6366F1'} 100%)`,
+                  color: '#fff',
+                  border: 'none',
+                  padding: '1rem 2rem',
+                  borderRadius: '10px',
+                  fontSize: '1.1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: isDarkTheme
+                    ? '0 4px 15px rgba(91, 140, 255, 0.4)'
+                    : '0 4px 15px rgba(0, 102, 204, 0.4)'
                 }}
                 disabled={loading}
               >
                 {loading ? 'Guardando...' : 'Guardar Configuracion'}
               </button>
-              
-              <button 
+
+              <button
                 type="button"
-                style={{ 
-                  background: '#6c757d', 
-                  color: '#fff', 
-                  border: 'none', 
-                  padding: '1rem 2rem', 
-                  borderRadius: '10px', 
-                  fontSize: '1.1rem', 
-                  fontWeight: '600', 
-                  cursor: 'pointer', 
-                  transition: 'all 0.3s ease' 
+                className="action-button settings-mobile-button"
+                style={{
+                  background: '#6c757d',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '1rem 2rem',
+                  borderRadius: '10px',
+                  fontSize: '1.1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
                 }}
                 onClick={handleResetSettings}
               >
@@ -665,5 +718,6 @@ export default function Settings() {
         </div>
       </div>
     </div>
+    </>
   );
 }

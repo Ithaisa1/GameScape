@@ -6,6 +6,16 @@ import { useNotifications } from '../../context/NotificationProvider';
 import StarRating from '../StarRating/StarRating';
 import styles from './GameCard.module.css';
 
+/**
+ * @component GameCard
+ * @description Tarjeta de juego que muestra información básica (imagen, nombre, rating, año) y permite
+ *              navegar al detalle del juego. Muestra el rating promedio de usuarios si hay reseñas.
+ *
+ * @param {Object} props
+ * @param {Object} props.game - Objeto con datos del juego (id, name, background_image, rating, released, etc.)
+ *
+ * @returns {JSX.Element} Tarjeta de juego con enlace a detalle y botón de favoritos
+ */
 export default function GameCard({ game }) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useGameContext();
   const { isAuthenticated } = useAuthContext();

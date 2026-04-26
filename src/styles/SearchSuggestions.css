@@ -1,4 +1,11 @@
-/* Estilos para SearchSuggestions */
+/* Estilos para/**
+ * @file SearchSuggestions.css
+ * @description Estilos para el componente de sugerencias de búsqueda
+ *              basadas en el historial del usuario.
+ * @module Styles
+ */
+
+/* SearchSuggestions Styles */
 .search-suggestions {
   position: absolute;
   top: 100%;

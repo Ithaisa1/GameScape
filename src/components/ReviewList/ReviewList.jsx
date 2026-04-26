@@ -1,3 +1,10 @@
+/**
+ * @file ReviewList.jsx
+ * @description Componente que muestra la lista de reseñas de un juego con opciones de ordenamiento
+ *              y edición. Las reseñas se almacenan en localStorage.
+ * @module Components
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNotifications } from '../../context/NotificationProvider';
@@ -5,19 +12,48 @@ import StarRating from '../StarRating/StarRating';
 import ReviewForm from '../ReviewForm/ReviewForm';
 import styles from './ReviewList.module.css';
 
+/**
+ * @component ReviewList
+ * @description Lista de reseñas de usuarios para un juego específico. Permite ver, ordenar,
+ *              editar y eliminar reseñas. Las reseñas se persisten en localStorage.
+ *
+ * @param {Object} props
+ * @param {string|number} props.gameId - ID del juego
+ * @param {string} props.gameName - Nombre del juego
+ *
+ * @returns {JSX.Element} Lista de reseñas con formulario para añadir/editar
+ *
+ * Estado interno:
+ * - reviews: Array de reseñas del juego
+ * - loading: Boolean que indica si se están cargando las reseñas
+ * - sortBy: Criterio de ordenamiento ('newest', 'oldest', 'highest', 'lowest', 'helpful')
+ * - editingReview: Reseña que se está editando o null
+ *
+ * Efectos secundarios:
+ * - useEffect: Carga las reseñas desde localStorage cuando cambia gameId
+ */
 export default function ReviewList({ gameId, gameName }) {
   const { user, isAuthenticated } = useAuthContext();
   const { showNotification } = useNotifications();
   
+  // Estado de las reseñas cargadas desde localStorage
   const [reviews, setReviews] = useState([]);
+  // Estado de carga mientras se obtienen las reseñas
   const [loading, setLoading] = useState(true);
+  // Criterio de ordenamiento de las reseñas
   const [sortBy, setSortBy] = useState('newest'); // newest, oldest, highest, lowest, helpful
+  // Reseña que se está editando actualmente (null si no se está editando)
   const [editingReview, setEditingReview] = useState(null);
 
+  // Cargar reseñas desde localStorage cuando cambia el gameId
   useEffect(() => {
     loadReviews();
   }, [gameId]);
 
+  /**
+   * @function loadReviews
+   * @description Carga las reseñas del juego desde localStorage
+   */
   const loadReviews = () => {
     setLoading(true);
     try {
@@ -31,21 +67,31 @@ export default function ReviewList({ gameId, gameName }) {
     }
   };
 
+  /**
+   * @function handleReviewSubmitted
+   * @description Maneja el envío de una reseña nueva o editada. Actualiza el estado de reviews
+   * @param {Object} newReview - Objeto de reseña enviada
+   */
   const handleReviewSubmitted = (newReview) => {
     setReviews(prev => {
       if (editingReview) {
-        // Actualizar reseña existente
+        // Si se está editando, actualizar la reseña existente en el array
         return prev.map(review => 
           review.id === newReview.id ? newReview : review
         );
       } else {
-        // Añadir nueva reseña
+        // Si es nueva, añadir al principio del array
         return [newReview, ...prev];
       }
     });
     setEditingReview(null);
   };
 
+  /**
+   * @function handleEditReview
+   * @description Establece la reseña a editar y muestra el formulario
+   * @param {Object} review - Objeto de reseña a editar
+   */
   const handleEditReview = (review) => {
     setEditingReview(review);
   };

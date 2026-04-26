@@ -1,3 +1,10 @@
+/**
+ * @file StarRating.test.jsx
+ * @description Tests unitarios para el componente StarRating. Verifica el renderizado
+ *              de estrellas, interactividad y cambios de calificación.
+ * @module Test
+ */
+
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';

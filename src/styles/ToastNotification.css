@@ -1,3 +1,10 @@
+/**
+ * @file ToastNotification.css
+ * @description Estilos para las notificaciones toast. Incluye animaciones
+ *              de entrada/salida y variantes de color (success, error, info, warning).
+ * @module Styles
+ */
+
 .toast-notification {
   position: fixed;
   top: 20px;
@@ -8,7 +15,12 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 9999;
-  animation: slideIn 0.3s ease-out;
+  color: white;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+.toast-notification.success {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }

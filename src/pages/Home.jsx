@@ -8,6 +8,21 @@ import Loader from '../components/Loader/Loader';
 import GameFilters from '../components/GameFilters/GameFilters';
 import Pagination from '../components/Pagination/Pagination';
 
+/**
+ * @component Home
+ * @description Página principal de la aplicación que muestra un catálogo de juegos con búsqueda,
+ *              filtros por género, ordenamiento por rating y paginación. Muestra un banner de
+ *              registro para usuarios no autenticados.
+ *
+ * Estado interno:
+ * - Utiliza useGameContext para acceder a juegos, filtros y paginación
+ * - Utiliza useAuthContext para verificar si el usuario está autenticado
+ *
+ * Efectos secundarios:
+ * - useEffect: Resetea la página a 1 cuando cambian los filtros de búsqueda o género
+ *
+ * @returns {JSX.Element} Página principal con catálogo de juegos, filtros y paginación
+ */
 export default function Home() {
   const { 
     searchQuery, 

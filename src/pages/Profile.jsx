@@ -4,6 +4,24 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeProvider';
 // CSS eliminado - Profile.jsx usa estilos inline o de componentes
 
+/**
+ * @component Profile
+ * @description Página de perfil de usuario que permite editar información personal (nombre, nick, email),
+ *              cambiar contraseña, cerrar sesión y eliminar cuenta. Muestra estadísticas del usuario
+ *              y permite cargar foto de perfil.
+ *
+ * Estado interno:
+ * - formData: Objeto con datos del formulario (name, nick, email, passwords)
+ * - showPasswords: Objeto para controlar visibilidad de contraseñas
+ * - error/success: Mensajes de estado de las operaciones
+ * - loading: Estado de carga durante operaciones
+ * - showDeleteConfirm: Estado para mostrar modal de confirmación de eliminación
+ *
+ * Efectos secundarios:
+ * - useEffect: Actualiza formData cuando cambia el usuario
+ *
+ * @returns {JSX.Element} Página de perfil con formulario de edición y opciones de cuenta
+ */
 export default function Profile() {
   const { user, updateProfile, logout, deleteAccount } = useAuthContext();
   const navigate = useNavigate();

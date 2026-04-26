@@ -1,7 +1,14 @@
+/**
+ * @file StoreButtons.jsx
+ * @description Componente que muestra botones de tiendas donde está disponible un juego.
+ *              Muestra logos de tiendas (Steam, PlayStation, Xbox, etc.) con enlaces a sus páginas.
+ * @module Components
+ */
+
 import React from 'react';
 import styles from './StoreButtons.module.css';
 
-// Importar logos directamente
+// Importar logos directamente desde assets
 import steamLogo from '../../assets/stores/logo-steam.png';
 import microsoftStoreLogo from '../../assets/stores/logo-microsoft-store.png';
 import xboxLogo from '../../assets/stores/logo-xbox.png';
@@ -13,7 +20,12 @@ import eaLogo from '../../assets/stores/logo-ea.png';
 import ubisoftLogo from '../../assets/stores/logo-ubisoft.png';
 import activisionBlizzardLogo from '../../assets/stores/logo-activision-blizzard.png';
 
-// Mapeo de store_id a nombres de tiendas
+/**
+ * @function getStoreName
+ * @description Mapea el ID de tienda de la API RAWG al nombre legible de la tienda
+ * @param {number} storeId - ID de la tienda según la API RAWG
+ * @returns {string} Nombre legible de la tienda
+ */
 const getStoreName = (storeId) => {
     const storeMap = {
         1: 'Steam',
@@ -31,6 +43,12 @@ const getStoreName = (storeId) => {
     return storeMap[storeId] || 'Tienda';
 };
 
+/**
+ * @function getStoreClass
+ * @description Mapea el ID de tienda a una clase CSS para estilos específicos
+ * @param {number} storeId - ID de la tienda según la API RAWG
+ * @returns {string} Nombre de clase CSS para estilos específicos de la tienda
+ */
 const getStoreClass = (storeId) => {
     const classMap = {
         1: 'steam',
@@ -48,6 +66,12 @@ const getStoreClass = (storeId) => {
     return classMap[storeId] || 'default';
 };
 
+/**
+ * @function getStoreLogo
+ * @description Mapea el ID de tienda al logo correspondiente importado
+ * @param {number} storeId - ID de la tienda según la API RAWG
+ * @returns {string} Ruta del logo de la tienda
+ */
 const getStoreLogo = (storeId) => {
     const logoMap = {
         1: steamLogo,
@@ -65,10 +89,23 @@ const getStoreLogo = (storeId) => {
     return logoMap[storeId] || steamLogo;
 };
 
+/**
+ * @component StoreButtons
+ * @description Muestra botones de las tiendas donde está disponible un juego. Cada botón incluye
+ *              el logo de la tienda y un enlace para comprar el juego. Si no hay tiendas disponibles,
+ *              muestra un mensaje indicándolo.
+ *
+ * @param {Object} props
+ * @param {Array} props.stores - Array de tiendas obtenidas de la API RAWG
+ *
+ * @returns {JSX.Element} Grid de botones de tiendas con logos y enlaces
+ */
 export default function StoreButtons({ stores }) {
+    // Logs para debugging - pueden eliminarse en producción
     console.log('StoreButtons - stores recibidos:', stores);
     console.log('StoreButtons - stores length:', stores?.length);
     
+    // Si no hay tiendas disponibles, mostrar mensaje
     if (!stores || stores.length === 0){
         return (
             <div className={styles.storeButtonsNoStores}>
@@ -92,8 +129,10 @@ export default function StoreButtons({ stores }) {
                             src={getStoreLogo(store.store_id)} 
                             alt={getStoreName(store.store_id)}
                             className={styles.storeButtonsLogo}
+                            // Si el logo falla al cargar, ocultar la imagen y mostrar solo el nombre
                             onError={(e) => {
                                 e.target.style.display = 'none';
+                                console.error(`Error loading logo for store ${store.store_id}`);
                             }}
                         />
                         <span className={styles.storeButtonsName}>

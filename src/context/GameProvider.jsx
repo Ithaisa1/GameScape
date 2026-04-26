@@ -5,6 +5,49 @@ import { useNotifications } from './NotificationProvider';
 
 export const GameContext = createContext();
 
+/**
+ * @component GameProvider
+ * @description Proveedor de contexto para la gestión de juegos. Gestiona búsqueda, filtros, paginación,
+ *              favoritos y detalles de juegos. Utiliza la API de RAWG para obtener datos de juegos
+ *              y localStorage para persistir favoritos del usuario.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Componentes hijos que tendrán acceso al contexto de juegos
+ *
+ * @returns {JSX.Element} Provider de GameContext con el estado y funciones de gestión de juegos
+ *
+ * @context
+ * - favorites: Array de juegos favoritos del usuario
+ * - addToFavorites: Función para agregar juego a favoritos
+ * - removeFromFavorites: Función para eliminar juego de favoritos
+ * - isFavorite: Función para verificar si un juego es favorito
+ * - searchQuery: String con la consulta de búsqueda actual
+ * - setSearchQuery: Función para establecer la consulta de búsqueda
+ * - selectedGenre: String con el género seleccionado
+ * - setSelectedGenre: Función para establecer el género seleccionado
+ * - selectedPlatform: String con la plataforma seleccionada (legacy)
+ * - setSelectedPlatform: Función para establecer la plataforma seleccionada (legacy)
+ * - ratingSort: String con el ordenamiento por rating ('asc', 'desc', '')
+ * - setRatingSort: Función para establecer el ordenamiento por rating
+ * - currentPage: Number con la página actual de paginación
+ * - setCurrentPage: Función para establecer la página actual
+ * - sortBy: String con el criterio de ordenamiento ('relevance', 'rating', 'released', 'name', 'popularity')
+ * - setSortBy: Función para establecer el criterio de ordenamiento
+ * - yearRange: Object con rango de años {min, max}
+ * - setYearRange: Función para establecer el rango de años
+ * - selectedPlatforms: Array de plataformas seleccionadas
+ * - setSelectedPlatforms: Función para establecer las plataformas seleccionadas
+ * - games: Array de juegos obtenidos de la API
+ * - filteredGames: Array de juegos filtrados y ordenados (memoizado)
+ * - loading: Boolean que indica si se están cargando juegos
+ * - error: String con mensaje de error o null
+ * - totalCount: Number con el total de juegos disponibles
+ * - gameDetail: Object con detalles del juego seleccionado
+ * - gameDetailLoading: Boolean que indica si se están cargando detalles
+ * - gameDetailError: String con mensaje de error de detalles o null
+ * - fetchGameDetail: Función para obtener detalles de un juego por ID
+ * - gameDetailCache: Map con caché de detalles de juegos para evitar parpadeo
+ */
 export default function GameProvider({ children }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
@@ -34,6 +77,11 @@ export default function GameProvider({ children }) {
   const { user, isAuthenticated, updateProfile, addToSearchHistory } = useContext(AuthContext);
   const { showNotification } = useNotifications();
 
+  /**
+   * @function addToFavorites
+   * @description Agrega un juego a la lista de favoritos del usuario autenticado
+   * @param {Object} game - Objeto del juego a agregar
+   */
   const addToFavorites = (game) => {
     if (!isAuthenticated || !user) return;
     
@@ -45,6 +93,11 @@ export default function GameProvider({ children }) {
     }
   };
 
+  /**
+   * @function removeFromFavorites
+   * @description Elimina un juego de la lista de favoritos del usuario autenticado
+   * @param {string|number} gameId - ID del juego a eliminar
+   */
   const removeFromFavorites = (gameId) => {
     if (!isAuthenticated || !user) return;
     
@@ -52,6 +105,12 @@ export default function GameProvider({ children }) {
     updateProfile({ favorites: updatedFavorites });
   };
 
+  /**
+   * @function isFavorite
+   * @description Verifica si un juego está en la lista de favoritos del usuario
+   * @param {string|number} gameId - ID del juego a verificar
+   * @returns {boolean} True si el juego es favorito, false en caso contrario
+   */
   const isFavorite = (gameId) => {
     if (!isAuthenticated || !user) return false;
     return user.favorites?.some((fav) => fav.id === gameId) || false;
@@ -143,7 +202,11 @@ export default function GameProvider({ children }) {
     return filtered;
   }, [games, yearRange, selectedPlatforms, sortBy, ratingSort]);
 
-  // Fetch games based on filters
+  /**
+   * @function fetchGames
+   * @description Obtiene juegos de la API RAWG basándose en los filtros actuales (búsqueda, género, página)
+   *              Actualiza el estado de games, loading, error y totalCount
+   */
   const fetchGames = async () => {
     setLoading(true);
     setError(null);
@@ -182,7 +245,12 @@ export default function GameProvider({ children }) {
     }
   };
 
-  // Fetch game details by ID
+  /**
+   * @function fetchGameDetail
+   * @description Obtiene detalles de un juego específico por ID, incluyendo tiendas donde está disponible.
+   *              Utiliza caché para evitar parpadeo al navegar entre juegos
+   * @param {string|number} id - ID del juego a obtener
+   */
   const fetchGameDetail = async (id) => {
     if (!id) return;
     

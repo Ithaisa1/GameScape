@@ -1,3 +1,10 @@
+/**
+ * @file SearchBar.css
+ * @description Estilos para la barra de búsqueda con autocompletado.
+ *              Incluye input, botón de limpiar y dropdown de sugerencias.
+ * @module Styles
+ */
+
 .search-bar {
   display: flex;
   align-items: center;

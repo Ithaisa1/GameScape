@@ -4,6 +4,17 @@ import GameCard from '../components/GameCard/GameCard';
 import SearchHistory from '../components/SearchHistory/SearchHistory';
 import '../styles/Favorites.css';
 
+/**
+ * @component Favorites
+ * @description Página que muestra la lista de juegos favoritos del usuario autenticado.
+ *              Muestra un estado vacío si no hay favoritos, o una grilla con las tarjetas
+ *              de juegos favoritos. También muestra el historial de búsquedas.
+ *
+ * Estado interno:
+ * - Utiliza useGameContext para acceder a la lista de favoritos
+ *
+ * @returns {JSX.Element} Página de favoritos con grilla de juegos o estado vacío
+ */
 export default function Favorites(){
     const { favorites } = useGameContext();
 

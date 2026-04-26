@@ -1,7 +1,25 @@
+/**
+ * @file GameFilters.jsx
+ * @description Componente de filtros para buscar y ordenar juegos por género, rating, año y plataforma.
+ *              Incluye filtros básicos y avanzados con opción de limpiar todos los filtros.
+ * @module Components
+ */
+
 import React, { useState } from 'react';
 import { useGameContext } from '../../hooks/useGameContext';
 import styles from './GameFilters.module.css';
 
+/**
+ * @component GameFilters
+ * @description Panel de filtros para buscar y ordenar juegos. Incluye filtros por género, ordenamiento
+ *              por rating/criterio, rango de años y plataformas. Tiene un modo avanzado que muestra
+ *              filtros adicionales.
+ *
+ * @returns {JSX.Element} Panel de filtros con selects, inputs y checkboxes
+ *
+ * Estado interno:
+ * - showAdvanced: Boolean para mostrar/ocultar filtros avanzados
+ */
 export default function GameFilters() {
   const { 
     selectedGenre, 
@@ -16,20 +34,42 @@ export default function GameFilters() {
     setSelectedPlatforms
   } = useGameContext();
 
+  // Control de visibilidad de filtros avanzados
   const [showAdvanced, setShowAdvanced] = useState(false);
 
+  /**
+   * @function handleGenreChange
+   * @description Actualiza el género seleccionado en el contexto
+   * @param {Event} e - Evento de cambio del select
+   */
   const handleGenreChange = (e) => {
     setSelectedGenre(e.target.value);
   };
 
+  /**
+   * @function handleRatingSortChange
+   * @description Actualiza el ordenamiento por rating (ascendente, descendente o ninguno)
+   * @param {Event} e - Evento de cambio del select
+   */
   const handleRatingSortChange = (e) => {
     setRatingSort(e.target.value);
   };
 
+  /**
+   * @function handleSortByChange
+   * @description Actualiza el criterio de ordenamiento (relevancia, rating, fecha, nombre, popularidad)
+   * @param {Event} e - Evento de cambio del select
+   */
   const handleSortByChange = (e) => {
     setSortBy(e.target.value);
   };
 
+  /**
+   * @function handleYearRangeChange
+   * @description Actualiza el rango de años (mínimo o máximo)
+   * @param {string} type - 'min' o 'max' para indicar qué extremo del rango actualizar
+   * @param {string} value - Valor del año a establecer
+   */
   const handleYearRangeChange = (type, value) => {
     setYearRange(prev => ({
       ...prev,
@@ -37,6 +77,11 @@ export default function GameFilters() {
     }));
   };
 
+  /**
+   * @function handlePlatformToggle
+   * @description Alterna la selección de una plataforma (agrega si no está seleccionada, elimina si lo está)
+   * @param {string} platform - Plataforma a alternar ('pc', 'playstation', 'xbox', 'nintendo', 'mobile')
+   */
   const handlePlatformToggle = (platform) => {
     setSelectedPlatforms(prev => 
       prev.includes(platform) 
@@ -45,19 +90,28 @@ export default function GameFilters() {
     );
   };
 
+  /**
+   * @function applyFilters
+   * @description Fuerza la actualización manual de juegos disparando un evento personalizado
+   *              que el GameProvider escucha para refrescar los resultados
+   */
   const applyFilters = () => {
-    // Forzar la actualización manual de juegos
+    // Disparar evento personalizado que GameProvider escucha para actualizar juegos
     const event = new Event('applyFilters');
     window.dispatchEvent(event);
   };
 
+  /**
+   * @function clearFilters
+   * @description Resetea todos los filtros a sus valores por defecto y aplica los cambios
+   */
   const clearFilters = () => {
     setSelectedGenre('');
     setRatingSort('');
     setSortBy('relevance');
     setYearRange({ min: '', max: '' });
     setSelectedPlatforms([]);
-    // Aplicar filtros después de limpiar
+    // Aplicar filtros después de limpiar con un pequeño delay para asegurar que el estado se actualice
     setTimeout(applyFilters, 100);
   };
 

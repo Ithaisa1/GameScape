@@ -1,3 +1,10 @@
+/**
+ * @file Favorites.css
+ * @description Estilos para la página de favoritos. Incluye grid de tarjetas
+ *              y estado vacío cuando no hay favoritos.
+ * @module Styles
+ */
+
 .favorites {
   max-width: 1200px;
   margin: 0 auto;

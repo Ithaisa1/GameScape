@@ -1,3 +1,10 @@
+/**
+ * @file GameCard.test.jsx
+ * @description Tests unitarios para el componente GameCard. Verifica el renderizado,
+ *              interacción con el botón de favoritos y navegación al detalle.
+ * @module Test
+ */
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';

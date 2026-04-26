@@ -5,6 +5,17 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import styles from './Navbar.module.css';
 import { useTheme } from '../../context/ThemeProvider';
 
+/**
+ * @component Navbar
+ * @description Barra de navegación principal que muestra el logo, enlaces de navegación,
+ *              mensaje de bienvenida al usuario y menú de perfil con opciones de tema y logout.
+ *              Muestra diferentes opciones según si el usuario está autenticado o no.
+ *
+ * Estado interno:
+ * - showProfileMenu: Boolean para mostrar/ocultar el menú desplegable de perfil
+ *
+ * @returns {JSX.Element} Barra de navegación con enlaces y menú de usuario
+ */
 export default function Navbar() {
   const { isAuthenticated, logout, user, loading } = useAuthContext();
   const [showProfileMenu, setShowProfileMenu] = useState(false);

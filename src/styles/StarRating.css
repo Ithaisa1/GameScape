@@ -107,10 +107,18 @@
 }
 
 [data-theme="light"] .star-rating__value {
-  color: var(--text-muted);
+  color: #333;
 }
 
 /* Animation for rating changes */
+/**
+ * @file StarRating.css
+ * @description Estilos para el componente de valoración con estrellas.
+ *              Incluye tamaños (small, medium, large) y estados interactivo/readonly.
+ * @module Styles
+ */
+
+/* StarRating Styles */
 @keyframes starPulse {
   0% {
     transform: scale(1);

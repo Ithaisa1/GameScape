@@ -1,3 +1,10 @@
+/**
+ * @file Login.css
+ * @description Estilos para la página de login. Incluye formulario centrado
+ *              con inputs y botones estilizados.
+ * @module Styles
+ */
+
 .login {
   min-height: 100vh;
   display: flex;

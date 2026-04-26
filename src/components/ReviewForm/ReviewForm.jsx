@@ -1,31 +1,70 @@
+/**
+ * @file ReviewForm.jsx
+ * @description Componente de formulario para añadir o editar reseñas de juegos.
+ *              Valida la calificación y el texto antes de guardar en localStorage.
+ * @module Components
+ */
+
 import React, { useState } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNotifications } from '../../context/NotificationProvider';
 import StarRating from '../StarRating/StarRating';
 import styles from './ReviewForm.module.css';
 
+/**
+ * @component ReviewForm
+ * @description Formulario para añadir o editar reseñas de juegos. Valida que el usuario esté autenticado,
+ *              que haya seleccionado una calificación y que el texto tenga al menos 10 caracteres.
+ *              Las reseñas se guardan en localStorage.
+ *
+ * @param {Object} props
+ * @param {string|number} props.gameId - ID del juego
+ * @param {string} props.gameName - Nombre del juego
+ * @param {Function} props.onReviewSubmitted - Callback que se ejecuta al enviar la reseña
+ * @param {Object} [props.existingReview=null] - Reseña existente si se está editando
+ *
+ * @returns {JSX.Element} Formulario de reseña con calificación y texto
+ *
+ * Estado interno:
+ * - rating: Calificación seleccionada (0-5)
+ * - reviewText: Texto de la reseña
+ * - isSubmitting: Boolean que indica si se está enviando
+ * - showForm: Boolean para mostrar/ocultar el formulario
+ */
 export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existingReview = null }) {
   const { user, isAuthenticated } = useAuthContext();
   const { showNotification } = useNotifications();
   
+  // Calificación seleccionada (0 si no hay selección)
   const [rating, setRating] = useState(existingReview?.rating || 0);
+  // Texto de la reseña
   const [reviewText, setReviewText] = useState(existingReview?.text || '');
+  // Estado de envío del formulario
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Control de visibilidad del formulario
   const [showForm, setShowForm] = useState(false);
 
+  /**
+   * @function handleSubmit
+   * @description Maneja el envío del formulario de reseña. Valida autenticación, calificación y texto
+   * @param {Event} e - Evento del formulario
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validar que el usuario esté autenticado
     if (!isAuthenticated) {
       showNotification('Debes iniciar sesión para dejar una reseña', 'error');
       return;
     }
 
+    // Validar que se haya seleccionado una calificación
     if (rating === 0) {
       showNotification('Por favor selecciona una calificación', 'error');
       return;
     }
 
+    // Validar que el texto tenga al menos 10 caracteres
     if (reviewText.trim().length < 10) {
       showNotification('La reseña debe tener al menos 10 caracteres', 'error');
       return;
@@ -34,10 +73,10 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
     setIsSubmitting(true);
 
     try {
-      // Obtener reseñas existentes
+      // Obtener reseñas existentes del juego desde localStorage
       const existingReviews = JSON.parse(localStorage.getItem(`gameReviews_${gameId}`) || '[]');
       
-      // Crear nueva reseña o actualizar existente
+      // Crear nueva reseña o actualizar la existente
       const newReview = {
         id: existingReview?.id || Date.now().toString(),
         gameId,
@@ -47,6 +86,7 @@ export default function ReviewForm({ gameId, gameName, onReviewSubmitted, existi
         userNick: user.nick,
         rating,
         text: reviewText.trim(),
+        // Si es edición, mantener la fecha original, si es nueva, usar fecha actual
         createdAt: existingReview?.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         helpful: existingReview?.helpful || 0,

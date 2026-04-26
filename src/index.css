@@ -1,3 +1,10 @@
+/**
+ * @file index.css
+ * @description Estilos globales de la aplicación. Define el reset CSS, variables CSS para temas
+ *              (oscuro y claro), y estilos base para toda la aplicación.
+ * @module Styles
+ */
+
 * {
   margin: 0;
   padding: 0;

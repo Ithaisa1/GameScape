@@ -1,4 +1,11 @@
-/* Estilos para SearchHistory */
+/* Estilos para/**
+ * @file SearchHistory.css
+ * @description Estilos para el componente de historial de búsquedas.
+ *              Incluye lista de búsquedas recientes con timestamps.
+ * @module Styles
+ */
+
+/* SearchHistory Styles */
 .search-history {
   background: rgba(34, 39, 52, 0.95);
   border: 1px solid rgba(91, 140, 255, 0.2);

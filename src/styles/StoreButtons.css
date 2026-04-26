@@ -1,3 +1,11 @@
+/**
+ * @file StoreButtons.css
+ * @description Estilos para los botones de tiendas donde está disponible un juego.
+ *              Incluye estilos específicos para cada tienda (Steam, PlayStation, Xbox, etc.).
+ * @module Styles
+ */
+
+/* StoreButtons Styles */
 .store-buttons {
   display: flex;
   flex-wrap: wrap;

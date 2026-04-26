@@ -1,3 +1,10 @@
+/**
+ * @file Loader.css
+ * @description Estilos para el componente de carga (skeleton loading).
+ *              Incluye animaciones de shimmer para simular contenido cargando.
+ * @module Styles
+ */
+
 .loader-container {
   padding: 2rem;
 }

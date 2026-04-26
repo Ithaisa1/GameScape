@@ -4,6 +4,20 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../styles/Login.css';
 // CSS eliminado - Login.jsx usa estilos inline o de componentes
 
+/**
+ * @component Login
+ * @description Página de inicio de sesión que permite a los usuarios autenticarse con email y contraseña.
+ *              Redirige a la página principal después de un login exitoso.
+ *
+ * Estado interno:
+ * - email: String con el email del usuario
+ * - password: String con la contraseña del usuario
+ * - error: String con mensaje de error o vacío
+ * - loading: Boolean que indica si se está procesando el login
+ * - showPassword: Boolean para mostrar/ocultar contraseña
+ *
+ * @returns {JSX.Element} Formulario de login con validación y manejo de errores
+ */
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

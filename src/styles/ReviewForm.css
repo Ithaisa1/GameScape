@@ -1,3 +1,10 @@
+/**
+ * @file ReviewForm.css
+ * @description Estilos para el formulario de reseñas. Incluye inputs
+ *              de calificación y texto con validaciones visuales.
+ * @module Styles
+ */
+
 .review-form__trigger {
   margin: 20px 0;
 }

@@ -2,7 +2,21 @@ import { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 // CSS eliminado - Register.jsx usa estilos inline o de componentes
- 
+
+/**
+ * @component Register
+ * @description Página de registro que permite a nuevos usuarios crear una cuenta con nombre, nick,
+ *              email y contraseña. Valida que las contraseñas coincidan y tengan mínimo 6 caracteres.
+ *              Realiza auto-login después de un registro exitoso.
+ *
+ * Estado interno:
+ * - formData: Objeto con datos del formulario (name, nick, email, password, confirmPassword)
+ * - error: String con mensaje de error o vacío
+ * - loading: Boolean que indica si se está procesando el registro
+ * - showPassword/showConfirmPassword: Booleans para mostrar/ocultar contraseñas
+ *
+ * @returns {JSX.Element} Formulario de registro con validaciones
+ */
 export default function Register() {
   const [formData, setFormData] = useState({
     name: '',
