@@ -1,7 +1,6 @@
 {
-  "_comment": "Configuración de Vercel para el despliegue de la SPA React",
   "rewrites": [
-    { "_comment": "Reescribir todas las rutas a index.html para habilitar React Router en producción",
+    { 
       "source": "(.*)",
       "destination": "/index.html"
     }
